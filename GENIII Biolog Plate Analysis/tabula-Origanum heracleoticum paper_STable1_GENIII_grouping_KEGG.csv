@@ -1,0 +1,97 @@
+﻿Well,Compound_orginial_paper,Substrate,CAS number,KEGG ,C-source/sensitivity  Compound,Updated_Carbon_subgroup,Group
+A01,Negative control,Negative control,carbon,,,,Carbon source
+A02,Dextrin,Dextrin,CAS 9004-53-9,C00721,polymer,Others,Carbon source
+A03,Maltose,D-Maltose,CAS 6363-53-7,C00208,carbohydrate,Carbohydrate,Carbon source
+A04,D-Trehalose,D-Trehalose,CAS 6138-23-4,C01083,carbohydrate,Carbohydrate,Carbon source
+A05,D-Cellobiose,D-Cellobiose,CAS 528-50-7,C00185,carbohydrate,Carbohydrate,Carbon source
+A06,Gentiobiose,Gentiobiose,CAS 554-91-6,C08240,carbohydrate,Carbohydrate,Carbon source
+A07,Sucrose,Sucrose,CAS 57-50-1,C00089,carbohydrate,Carbohydrate,Carbon source
+A08,D-Turanose,D-Turanose,CAS 547-25-1,C19636,carbohydrate,Carbohydrate,Carbon source
+A09,Stachyose,Stachyose,CAS 54261-98-2,C01613,carbohydrate,Carbohydrate,Carbon source
+A10,Positive Control,Positive Control,CAS Positive Control,positive control,sensitivity,,Chemical sensitivity
+A11,pH 6.0,pH 6,CAS pH,pH growth at 6,sensitivity,,Chemical sensitivity
+A12,pH 5.0,pH 5,CAS pH,pH growth at 5,sensitivity,,Chemical sensitivity
+B01,D-Raffinose,D-Raffinose,CAS 17629-30-0,C00492,carbohydrate,Carbohydrate,Carbon source
+B02,a-D-Lactose,α-D-Lactose,CAS 5989-81-1,C00243,carbohydrate,Carbohydrate,Carbon source
+B03,D-Melibiose,D-Melibiose,CAS 585-99-9,C05402,carbohydrate,Carbohydrate,Carbon source
+B04,3-Methyl-D-Glucoside,β-Methyl-D-Glucoside,CAS 709-50-2,carbohydrate,carbon,Carbohydrate,Carbon source
+B05,D-Salicin,D-Salicin,CAS 138-52-3,C01451,carbohydrate,Carbohydrate,Carbon source
+B06,N-Acetyl-D-Glucosamine,N-Acetyl-D-Glucosamine,CAS 7512-17-6,C00140,carbohydrate,Carbohydrate,Carbon source
+B07,N-Acetyl-D-Mannosamine,N-Acetyl-β-D-Mannosamine,CAS 7772-94-3,C00645,carbohydrate,Carbohydrate,Carbon source
+B08,N-Acetyl-D-Galactosamine,N-Acetyl-D-Galactosamine,CAS 1811-31-0,C01074,carbohydrate,Carbohydrate,Carbon source
+B09,N-Acetyl-Neuraminic Acid,N-AcetylNeuraminic Acid,CAS 131-48-6,C00270,carboxylic acid,Carboxylic acid,Carbon source
+B10,1% NaCl,1% NaCl,CAS 7647-14-5,C13563,osmotic sensitivity NaCl,,Chemical sensitivity
+B11,4% NaCl,4% NaCl,CAS 7647-14-5,C13563,osmotic sensitivity NaCl,,Chemical sensitivity
+B12,8% NaCl,8% NaCl,CAS 7647-14-5,C13563,osmotic sensitivity NaCl,,Chemical sensitivity
+C01,a-D-Glucose,α-D-Glucose,CAS 50-99-7,C00031,carbohydrate,Carbohydrate,Carbon source
+C02,D-Mannose,D-Mannose,CAS 3458-28-4,C00159,carbohydrate,Carbohydrate,Carbon source
+C03,D-Fructose,D-Fructose,CAS 57-48-7,C00095,carbohydrate,Carbohydrate,Carbon source
+C04,D-Galactose,D-Galactose,CAS 59-23-4,C00124,carbohydrate,Carbohydrate,Carbon source
+C05,3-Methyl glucose,3-Methyl Glucose,CAS 13224-94-7,carbohydrate,carbon,Carbohydrate,Carbon source
+C06,D-Fucose,D-Fucose,CAS 3615-37-0,C01018,carbohydrate,Carbohydrate,Carbon source
+C07,L-Fucose,L-Fucose,CAS 2438-80-4,C01019,carbohydrate,Carbohydrate,Carbon source
+C08,L-Rhamnose,L-Rhamnose,CAS 3615-41-6,C00507,carbohydrate,Carbohydrate,Carbon source
+C09,Inosine,Inosine,CAS 58-63-9,C00294,carbohydrate ,Carbohydrate,Carbon source
+C10,1% Sodium Lactate,1% Sodium Lactate,CAS 79-33-4,C01432,osmotic sensitivity sodium lactate,,Chemical sensitivity
+C11,Fusidic Acid,Fusidic Acid,CAS 751-94-0,C06694,protein synthesis elongation factor,,Chemical sensitivity
+C12,D-Serine,D-Serine-chemical,CAS 312-84-5,C00740,inhibits 3PGA dehydrogenase (L-serine and pantothenate synthesis),,Chemical sensitivity
+D01,D-Sorbitol,D-Sorbitol,CAS 50-70-4,C00794,carbohydrate,Carbohydrate,Carbon source
+D02,D-Mannitol,D-Mannitol,CAS 69-65-8,C00392,carbohydrate,Carbohydrate,Carbon source
+D03,L-Arabitol,D-Arabitol,CAS 7643-75-6,C00532,carbohydrate,Carbohydrate,Carbon source
+D04,myo-Inositol,myo-Inositol,CAS 87-89-8,C00137,carbohydrate,Carbohydrate,Carbon source
+D05,Glycerol,Glycerol,CAS 56-81-5,C00116,carbohydrate,Carbohydrate,Carbon source
+D06,D-Glucose-6-Phosphate,D-Glucose-6-PO4,CAS 3671-99-6,C00092,carbohydrate,Carbohydrate,Carbon source
+D07,D-Fructose-6-Phosphate,D-Fructose-6-PO4,CAS 26177-86-6,C00085,carbohydrate,Carbohydrate,Carbon source
+D08,D-Aspartic Acid,D-Aspartic Acid,CAS 1783-96-6,C00402,N-Source amino acid,Amino acid,Carbon source
+D09,D-Serine,D-Serine,CAS 312-84-5,C00740,amino acid,Amino acid,Carbon source
+D10,Troleandomycin,Troleandomycin,CAS 2751-09-9,C01946,protein synthesis 50S ribosomal subunit (macrolide),,Chemical sensitivity
+D11,Rifamycin SV,Rifamycin SV,CAS 14897-39-3,C01848,RNA polymerase,,Chemical sensitivity
+D12,Minocycline,Minocycline,CAS 13614-98-7,C07225,protein synthesis 30S ribosomal subunit (tetracycline),,Chemical sensitivity
+E01,Gelatin,Gelatin,CAS 9000-70-8,C01498,polymer,Others,Carbon source
+E02,Glycl-L-Proline,Glycyl-L-Proline,CAS 704-15-4,N-Source peptide,carbon,Others,Carbon source
+E03,L-Alanine,L-Alanine,CAS 56-41-7,C00041,amino acid,Amino acid,Carbon source
+E04,L-Arginine,L-Arginine,CAS 1119-34-2,C00062,amino acid,Amino acid,Carbon source
+E05,L-Aspartic Acid,L-Aspartic Acid,CAS 3792-50-5,C00049,N-Source amino acid,Amino acid,Carbon source
+E06,L-Glutamic Acid,L-Glutamic Acid,CAS 6106-04-3,C00025,amino acid,Amino acid,Carbon source
+E07,L-Histidine,L-Histidine,CAS 5934-29-2,C00135,amino acid,Amino acid,Carbon source
+E08,L-Pyroglutamic Acid,L-Pyroglutamic Acid,CAS 98-79-3,C02238,amino acid,Amino acid,Carbon source
+E09,L-Serine,L-Serine,CAS 56-45-1,C00065,amino acid,Amino acid,Carbon source
+E10,Lincomycin,Lincomycin,CAS 859-18-7,C06812-membrane,protein synthesis 50S ribosomal subunit lincosamide,,Chemical sensitivity
+E11,Guanidine hydrochloride,Guanidine HCl,CAS 50-01-1,chaotropic agent-membrane,sensitivity,,Chemical sensitivity
+E12,Niaproof 4,Niaproof 4,CAS 139-88-8,detergent anionic,sensitivity,,Chemical sensitivity
+F01,Pectin,Pectin,CAS 9000-69-5,C00714,polymer,Others,Carbon source
+F02,D-Galacturonic Acid,D-Galacturonic Acid,CAS 91510-62-2,C00333,carboxylic acid,Carboxylic acid,Carbon source
+F03,L-Galactonic Acid-g-Lactone,L-Galactonic Acid Lactone,CAS 1668-08-2,C01115,carboxylic acid,Carboxylic acid,Carbon source
+F04,D-Gluconic Acid,D-Gluconic Acid,CAS 527-07-1,C00257,carboxylic acid,Carboxylic acid,Carbon source
+F05,D-Glucuronic Acid,D-Glucuronic Acid,CAS 14984-34-0,C00191,carboxylic acid,Carboxylic acid,Carbon source
+F06,Glucuronamide,Glucuronamide,CAS 3789-97-7,D01791,amide,Others,Carbon source
+F07,Mucic Acid,Mucic Acid,CAS 526-99-8,C01807,carboxylic acid,Carboxylic acid,Carbon source
+F08,Quinic Acid,Quinic Acid,CAS 77-95-2,C00296,carboxylic acid,Carboxylic acid,Carbon source
+F09,D-Saccharic Acid,D-Saccharic Acid,CAS 576-42-1,C00818,carboxylic acid,Carboxylic acid,Carbon source
+F10,Vancomycin,Vancomycin,CAS 1404-93-9,C06684,wall,,Chemical sensitivity
+F11,Tetrazolium Violet,Tetrazolium Violet,CAS 1719-71-7,respiration uncouple ,sensitivity,,Chemical sensitivity
+F12,Tetrazolium Blue,Tetrazolium Blue,CAS 1871-22-3,respiration uncouple ,sensitivity,,Chemical sensitivity
+G01,4-Hydroxyphenyl Acetic Acid,p-Hydroxy-Phenylacetic Acid,CAS 156-38-7,C00642,carboxylic acid,Carboxylic acid,Carbon source
+G02,Pyruvic Acid methyl ester,Methyl Pyruvate,CAS 600-22-6,ester,carbon,Others,Carbon source
+G03,D-Lactic Acid Methyl Ester,D-Lactic Acid Methyl Ester,CAS 17392-83-5,ester,carbon,Others,Carbon source
+G04,L-Lactic Acid,L-Lactic Acid,CAS 79-33-4,C01432,carboxylic acid,Carboxylic acid,Carbon source
+G05,Citric Acid,Citric Acid,CAS 6132-04-3,C00158,carboxylic acid,Carboxylic acid,Carbon source
+G06,a-Ketoglutaric Acid,α-Keto-Glutaric Acid,CAS 22202-68-2,C00026,carboxylic acid,Carboxylic acid,Carbon source
+G07,D-Malic Acid,D-Malic Acid,CAS 636-61-3,C00497,carboxylic acid,Carboxylic acid,Carbon source
+G08,L-Malic Acid,L-Malic Acid,CAS 138-09-0,C00149,carboxylic acid,Carboxylic acid,Carbon source
+G09,Bromosuccinic Acid,Bromo-Succinic Acid,CAS 923-06-8,carboxylic acid,carbon,Carboxylic acid,Carbon source
+G10,Nalidixic Acid,Nalidixic Acid,CAS 3374-05-8,C05079,DNA topoisomerase,,Chemical sensitivity
+G11,Lithium Chloride,Lithium Chloride,CAS 7447-41-8,C15473,toxic cation,,Chemical sensitivity
+G12,Potassium Tellurite,Potassium Tellurite,CAS 123333-66-4,toxic anion,sensitivity,,Chemical sensitivity
+H01,Tween 40,Tween 40,CAS 9005-66-7,D05566-drug,fatty acid,Others,Carbon source
+H02,g-Amino-N-Butyric Acid,γ-Amino-Butryric Acid,CAS 56-12-2,C00334,N-Source other,Amino acid,Carbon source
+H03,a-Hydroxybutyric Acid,α-Hydroxy-Butyric Acid,CAS 19054-57-0,C05984,carboxylic acid,Carboxylic acid,Carbon source
+H04,b-Hydroxybutyric Acid,"β-Hydroxy-D,L-Butyric Acid",CAS 150-83-4,C01089,carboxylic acid,Carboxylic acid,Carbon source
+H05,a-Ketobutyric Acid,α-Keto-Butyric Acid,CAS 2013-26-5,C00109,carboxylic acid,Carboxylic acid,Carbon source
+H06,Acetoacetic Acid,Acetoacetic Acid,CAS 3483-11-2,C00164,carboxylic acid,Carboxylic acid,Carbon source
+H07,Propionic Acid,Propionic Acid,CAS 137-40-6,C00163,carboxylic acid,Carboxylic acid,Carbon source
+H08,Acetic Acid,Acetic Acid,CAS 127-09-3,C00033,carboxylic acid,Carboxylic acid,Carbon source
+H09,Formic Acid,Formic Acid,CAS 141-53-7,C00058,carboxylic acid,Carboxylic acid,Carbon source
+H10,Aztreonam,Aztreonam,CAS 78110-38-0,C06840,wall lactam,,Chemical sensitivity
+H11,Sodium Butyrate,Sodium Butyrate,CAS 156-54-7,C00246,carboxylic acid,,Chemical sensitivity
+H12,Sodium Bromate,Sodium Bromate,CAS 7789-38-0,toxic anion,sensitivity,,Chemical sensitivity
