@@ -1,0 +1,459 @@
+
+Starting Unicycler (2025-03-11 13:50:11)
+----------------------------------------
+    Welcome to Unicycler, an assembly pipeline for bacterial genomes. Since you provided both short and long reads, Unicycler will perform a hybrid assembly. It will first use SPAdes to make a short-read assembly graph, and then it will use various methods to scaffold that graph with the long reads.
+    For more information, please see https://github.com/rrwick/Unicycler
+
+Command: /isg/shared/apps/unicycler/0.5.0/bin/unicycler -1 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/FINAL_READS/358_forward_paired_trimmomatic_R1.fastq -2 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/FINAL_READS/358_forward_paired_trimmomatic_R2.fastq -l /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/FINAL_READS/KMM358_long_nanofilt.fastq -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM --min_fasta_length 50 --mode bold
+
+Unicycler version: v0.5.0
+Using 8 threads
+
+The output directory already exists and files may be reused or overwritten:
+  /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM
+
+Dependencies:
+  Program       Version   Status
+  spades.py     3.15.2    good  
+  racon         1.4.21    good  
+  makeblastdb   2.13.0+   good  
+  tblastn       2.13.0+   good  
+
+
+Choosing k-mer range for assembly (2025-03-11 13:50:17)
+-------------------------------------------------------
+    Unicycler chooses a k-mer range for SPAdes based on the length of the input reads. It uses a wide range of many k-mer sizes to maximise the chance of finding an ideal assembly.
+
+SPAdes maximum k-mer: 127
+Median read length: 144
+K-mer range: 27, 53, 71, 87, 99, 111, 119, 127
+
+
+SPAdes assemblies (2025-03-11 13:50:19)
+---------------------------------------
+    Unicycler now uses SPAdes to assemble the short reads. It scores the assembly graph for each k-mer using the number of contigs (fewer is better) and the number of dead ends (fewer is better). The score function is 1/(c*(d+2)), where c is the contig count and d is the dead end count.
+
+spades.py -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly -k 27 --threads 8 --isolate -1 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/FINAL_READS/358_forward_paired_trimmomatic_R1.fastq -2 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/FINAL_READS/358_forward_paired_trimmomatic_R2.fastq -m 1024
+
+spades.py -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly -k 27,53 --threads 8 --restart-from k27 -m 1024
+
+spades.py -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly -k 27,53,71 --threads 8 --restart-from k53 -m 1024
+
+spades.py -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly -k 27,53,71,87 --threads 8 --restart-from k71 -m 1024
+
+spades.py -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly -k 27,53,71,87,99 --threads 8 --restart-from k87 -m 1024
+
+spades.py -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly -k 27,53,71,87,99,111 --threads 8 --restart-from k99 -m 1024
+
+spades.py -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly -k 27,53,71,87,99,111,119 --threads 8 --restart-from k111 -m 1024
+
+spades.py -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly -k 27,53,71,87,99,111,119,127 --threads 8 --restart-from k119 -m 1024
+
+K-mer   Contigs   Dead ends   Score   
+   27     1,460          51   1.29e-05
+   53       614          21   7.08e-05
+   71       487          21   8.93e-05
+   87       388          22   1.07e-04
+   99       343          24   1.12e-04
+  111       280          27   1.23e-04
+  119       132          28   2.53e-04
+  127        85          42   2.67e-04 ← best
+
+Read depth filter: removed 103 contigs totalling 30615 bp
+Deleting /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/spades_assembly/
+
+
+Determining graph multiplicity (2025-03-11 14:29:14)
+----------------------------------------------------
+    Multiplicity is the number of times a sequence occurs in the underlying sequence. Single-copy contigs (those with a multiplicity of one, occurring only once in the underlying sequence) are particularly useful.
+
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/002_depth_filter.gfa
+
+
+Cleaning graph (2025-03-11 14:29:14)
+------------------------------------
+    Unicycler now performs various cleaning procedures on the graph to remove overlaps and simplify the graph structure. The end result is a graph ready for bridging.
+
+Graph overlaps removed
+
+Merged small segments:
+    78, 79, 82
+
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/003_overlaps_removed.gfa
+
+    Unicycler now selects a set of anchor contigs from the single-copy contigs. These are the contigs which will be connected via bridges to form the final assembly.
+
+44 anchor segments (4,724,115 bp) out of 82 total segments (4,778,934 bp)
+
+
+Creating SPAdes contig bridges (2025-03-11 14:29:14)
+----------------------------------------------------
+    SPAdes uses paired-end information to perform repeat resolution (RR) and produce contigs from the assembly graph. SPAdes saves the graph paths corresponding to these contigs in the contigs.paths file. When one of these paths contains two or more anchor contigs, Unicycler can create a bridge from the path.
+
+                         Bridge
+Start    Path   End     quality
+   14    -58    -39        17.0
+
+
+Creating loop unrolling bridges (2025-03-11 14:29:14)
+-----------------------------------------------------
+    When a SPAdes contig path connects an anchor contig with the middle contig of a simple loop, Unicycler concludes that the sequences are contiguous (i.e. the loop is not a separate piece of DNA). It then uses the read depth of the middle and repeat contigs to guess the number of times to traverse the loop and makes a bridge.
+
+No loop unrolling bridges made
+
+
+Loading reads (2025-03-11 14:29:14)
+-----------------------------------
+39,167 / 39,167 (100.0%) - 206,913,565 bp
+
+
+Assembling contigs and long reads with miniasm (2025-03-11 14:29:15)
+--------------------------------------------------------------------
+    Unicycler uses miniasm to construct a string graph assembly using both the short read contigs and the long reads. It will then use the resulting string graph to produce bridges between contigs. This method requires decent coverage of long reads and therefore may not be fruitful if long reads are sparse. However, it does not rely on the short read assembly graph having good connectivity and is able to bridge an assembly graph even when it contains many dead ends.
+    Unicycler uses two types of "reads" as assembly input: anchor contigs from the short-read assembly and actual long reads which overlap two or more of these contigs. It then assembles them with miniasm.
+
+Aligning long reads to graph using minimap
+
+Saving to /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/miniasm_assembly/01_assembly_reads.fastq:
+  43 short-read contigs
+  2,556 long reads
+
+Finding overlaps with minimap... 
+success
+  300,047 overlaps
+
+Assembling reads with miniasm... 
+success
+  208 segments, 206 links
+
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/miniasm_assembly/11_branching_paths_removed.gfa
+Merging segments into unitigs:
+  2 linear unitigs
+  total size = 4,850,279 bp
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/miniasm_assembly/12_unitig_graph.gfa
+
+
+Polishing miniasm assembly with Racon (2025-03-11 14:29:26)
+-----------------------------------------------------------
+    Unicycler now uses Racon to polish the miniasm assembly. It does multiple rounds of polishing to get the best consensus. Circular unitigs are rotated between rounds such that all parts (including the ends) are polished well.
+
+Saving to /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/miniasm_assembly/racon_polish/polishing_reads.fastq:
+  43 short-read contigs
+  39,167 long reads
+
+Polish       Assembly          Mapping
+round            size          quality
+begin       4,850,279        38,124.11
+1           4,852,896        38,333.38
+
+Best polish: /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/miniasm_assembly/racon_polish/006_rotated.fasta
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/miniasm_assembly/13_racon_polished.gfa
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/004_long_read_assembly.gfa
+
+    Contigs in the short-read assembly graph which end in dead ends may contain bogus sequence near the dead end. Unicycler therefore uses the read clipping values from the miniasm assembly to trim these dead ends to only the parts which aligned well to long reads.
+
+                       Trimmed   Trimmed             
+            Previous      from      from        Final
+Segment       length     start       end       length
+10           163,887         1         3      163,883
+11           156,021        43         -      155,978
+13           150,759         3         -      150,756
+15           143,124        10         -      143,114
+1            359,552         4         3      359,545
+20           110,569         2         -      110,567
+23            97,416         4         -       97,412
+24            80,376         -         1       80,375
+26            61,914         3         2       61,909
+27            61,897         -         1       61,896
+31            44,472         -         8       44,464
+35            33,763         1         -       33,762
+36            30,845        41         -       30,804
+3            239,316         4         -      239,312
+40            18,191         -         3       18,188
+43            11,585         2         -       11,583
+44            10,281        44         -       10,237
+5            219,030         2         -      219,028
+7            197,846         -         4      197,842
+8            197,250         2         -      197,248
+9            175,685         -        16      175,669
+
+    Unicycler now places the single copy contigs back into the unitig graph. This serves two purposes: a) it replaces long read assembly sequences (which may be error prone) with Illumina assembly sequence (which is probably quite accurate), improving the assembly quality, and b) it defines inter-contig sequences for use in building bridges.
+
+Searching for contigs using 5,000 bp of contig ends.
+
+Contig   Result              Start pos   End pos   Strand
+     1   found in unitig 1      114590    474336        +
+     2   found in unitig 1      474497    796579        +
+     3   found in unitig 1     4315366   4554678        +
+     4   found in unitig 1      899748   1130067        +
+     5   found in unitig 1     2463619   2682647        +
+     6   found in unitig 1     1327709   1531344        -
+     7   found in unitig 1     2907165   3105320        -
+     8   found in unitig 1     2021093   2218348        +
+     9   found in unitig 1     3202371   3378040        +
+    10   found in unitig 1     2266608   2430491        +
+    11   found in unitig 1     3493233   3649210        +
+    12   found in unitig 1     4559896   4715344        +
+    13   found in unitig 1     1676954   1828524        -
+    14   found in unitig 1     3907713   4054258        +
+    15   found in unitig 1     1532475   1675589        +
+    16   found in unitig 1     1828713   1955181        -
+    17   found in unitig 1     4080782   4202306        +
+    18   found in unitig 1     3654781   3774865        +
+    19   found in unitig 1           0    114495        +
+    20   found in unitig 1     1216712   1327277        -
+    21   found in unitig 1     3378679   3487163        -
+    22   found in unitig 1      797537    898990        -
+    23   found in unitig 1     2794004   2891416        +
+    24   found in unitig 1     1131390   1211765        +
+    25   found in unitig 1     1956139   2020299        -
+    26   found in unitig 1     2719243   2781152        -
+    27   found in unitig 1     4253362   4315258        +
+    28   found in unitig 1     3106685   3154931        +
+    29   found in unitig 1     2219671   2266500        -
+    30   found in unitig 1     3856485   3902341        +
+    31   found in unitig 1     4203308   4247772        -
+    32   found in unitig 1     3780289   3823681        -
+    33   found in unitig 1     3155970   3196944        -
+    34   found in unitig 2           0     36654        +
+    35   found in unitig 1     2685300   2719062        -
+    36   found in unitig 1     2430511   2461315        +
+    37   found in unitig 1     3824720   3850828        +
+    38   found in unitig 2       71819     94328        +
+    39   found in unitig 1     4055124   4073461        -
+    40   found in unitig 2       95706    113942        +
+    41   found in unitig 1     4716387   4733133        -
+    43   found in unitig 1     2781165   2792748        +
+    44   found in unitig 1     2896843   2907080        -
+
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/miniasm_assembly/14_contigs_placed.gfa
+
+
+Creating miniasm/Racon bridges (2025-03-11 14:30:53)
+----------------------------------------------------
+    Now that the miniasm/Racon string graph is complete, Unicycler will use it to build bridges between anchor segments.
+
+       Start → end    Best path                                 Quality
+ 1/41     19 → 1                                                 98.810
+ 2/41    -13 → -16                                               96.790
+ 3/41    -16 → -25    56                                         58.357
+ 4/41    -25 → 8                                                 66.130
+ 5/41      8 → -29    52                                         78.378
+ 6/41    -29 → 10                                                75.535
+ 7/41     10 → 36                                                99.683
+ 8/41     36 → 5                                                 80.809
+ 9/41      5 → -35                                               67.398
+10/41    -35 → -26                                               95.926
+11/41    -26 → 43                                                98.898
+12/41      1 → 2                                                 97.980
+13/41     43 → 23                                                81.396
+14/41     23 → -44    -77, -47, -68, 72                          68.285
+15/41    -44 → -7                                                99.105
+16/41     -7 → 28     51                                         88.569
+17/41     28 → -33    -71, 57, 73                                86.917
+18/41    -33 → 9      70, -47, -68, 72                           62.209
+19/41      9 → -21                                               93.461
+20/41    -21 → 11                                                67.203
+21/41     11 → 18     -79, -77, -47, -75, -64                    67.055
+22/41     18 → -32                                               56.678
+23/41      2 → -22    56                                         91.051
+24/41    -32 → 37     -73, -57, 71                               90.123
+25/41     37 → 30     64, 75, 47, 77, 67                         66.768
+26/41     30 → 14     -74, 68, 47, 77, -82                       67.397
+27/41     14 → -39    -58                                        57.660
+28/41    -39 → 17     -58, 55, -74, 68, 47, 77, 67               43.534
+29/41     17 → -31                                               89.436
+30/41    -31 → 27                                                54.123
+31/41     27 → 3                                                 46.735
+32/41      3 → 12     75, 47, -70                                49.963
+33/41     12 → -41    -78, 57, 69                                90.648
+34/41    -22 → 4      60                                         91.677
+35/41     34 → 38                                                28.625
+36/41     38 → 40                                                20.088
+37/41      4 → 24     52                                         88.743
+38/41     24 → -20                                               64.815
+39/41    -20 → -6                                                67.279
+40/41     -6 → 15                                                64.019
+41/41     15 → -13                                               88.535
+
+
+Creating simple long read bridges (2025-03-11 14:30:54)
+-------------------------------------------------------
+    Unicycler uses long read alignments (from minimap) to resolve simple repeat structures in the graph. This takes care of some "low-hanging fruit" of the graph simplification.
+
+Aligning long reads to graph using minimap
+
+    Two-way junctions are defined as cases where two graph contigs (A and B) join together (C) and then split apart again (D and E). This usually represents a simple 2-copy repeat, and there are two possible options for its resolution: (A→C→D and B→C→E) or (A→C→E and B→C→D). Each read which spans such a junction gets to "vote" for option 1, option 2 or neither. Unicycler creates a bridge at each junction for the most voted for option.
+
+                                               Op. 1   Op. 2   Neither   Final    Bridge
+Junction       Option 1          Option 2      votes   votes     votes     op.   quality
+      56   -16 → 56 → -25,   -16 → 56 → -22,      49       0         0       1      99.4
+             2 → 56 → -22      2 → 56 → -25                                             
+      60   -22 → 60 → -43,    -22 → 60 → 4,        6      36        31       2       0.0
+             21 → 60 → 4      21 → 60 → -43                                             
+      52   4 → 52 → -29, 8    4 → 52 → 24, 8       0      46         0       2      88.1
+              → 52 → 24         → 52 → -29                                              
+
+    Simple loops are parts of the graph where two contigs (A and B) are connected via a repeat (C) which loops back to itself (via D). It is possible to traverse the loop zero times (A→C→B), one time (A→C→D→C→B), two times (A→C→D→C→D→C→B), etc. Long reads which span the loop inform which is the correct number of times through. In this step, such reads are found and each is aligned against alternative loop counts. A reads casts its "vote" for the loop count it agrees best with, and Unicycler creates a bridge using the most voted for count.
+
+No suitable simple loops present
+
+
+Determining low score threshold (2025-03-11 14:30:58)
+-----------------------------------------------------
+    Before conducting semi-global alignment of the long reads to the assembly graph, Unicycler must determine a minimum alignment score threshold such that nonsense alignments are excluded. To choose a threshold automatically, it examines alignments between random sequences and selects a score a few standard deviations above the mean.
+
+Automatically choosing a threshold using random alignment scores.
+
+Random alignment mean score: 61.66
+         standard deviation:  1.31
+        Low score threshold: 61.66 + (7 x 1.31) = 70.86
+
+
+Aligning reads (2025-03-11 14:31:00)
+------------------------------------
+39,167 / 39,167 (100.0%)
+
+
+Read alignment summary (2025-03-11 15:03:16)
+--------------------------------------------
+Total read count:             39,167
+Fully aligned reads:          37,481
+Partially aligned reads:       1,637
+Unaligned reads:                  49
+Total bases aligned:     206,050,375 bp
+Mean alignment identity:          98.9%
+
+Deleting /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/read_alignment/
+
+
+Building long read bridges (2025-03-11 15:03:16)
+------------------------------------------------
+    Unicycler uses the long read alignments to produce bridges between anchor segments. These bridges can be formed using as few as one long read, giving Unicycler the ability to bridge the graph even when long-read depth is low.
+
+       Start → end    Best path                                 Quality
+ 1/43    -17 → 39     -67, -77, -47, -68, 74, -55, 58            43.663
+ 2/43    -27 → 31                                                32.761
+ 3/43     30 → 14     -74, 68, 47, 77, -82                       74.441
+ 4/43     32 → -18                                               22.456
+ 5/43     37 → 30     64, 75, 47, 77, 67                         69.488
+ 6/43     11 → 18     -79, -77, -47, -75, -64                    79.222
+ 7/43      3 → 12     75, 47, -70                                41.709
+ 8/43     -9 → 33     -72, 68, 47, -70                           71.780
+ 9/43    -19 → 41                                                21.740
+10/43     44 → -23    -72, 68, 47, 77                            75.310
+11/43     24 → -20                                               48.533
+12/43    -11 → 21                                                41.241
+13/43     43 → 23                                                58.215
+14/43     41 → -12    -69, -57, 78                               82.243
+15/43     33 → -28    -73, -57, 71                               79.206
+16/43     15 → -13                                               50.567
+17/43     -7 → 28     51                                         83.174
+18/43     35 → -5                                                28.792
+19/43     38 → 40                                                10.056
+20/43      4 → 24     52                                         83.087
+21/43     22 → -2     -56                                        82.980
+22/43     39 → -14    58                                         50.042
+23/43     36 → 5                                                 55.015
+24/43     29 → -8     -52                                        73.872
+25/43     43 → 22     -60                                        19.711
+26/43     25 → 16     -56                                        40.000
+27/43     16 → 13                                                78.313
+28/43     26 → 35                                                92.024
+29/43     -6 → 15                                                51.705
+30/43      6 → 20                                                52.646
+31/43      1 → 2                                                 94.617
+32/43     40 → 34                                                 4.643
+33/43    -10 → 29                                                73.509
+34/43     27 → 3                                                 45.648
+35/43     10 → 36                                                98.125
+36/43    -26 → 43                                                95.986
+37/43     19 → 1                                                 96.750
+38/43      7 → 44                                                93.638
+39/43    -32 → 37     -73, -57, 71                               80.606
+40/43     31 → -17                                               66.221
+41/43     -4 → 22     -60                                        82.035
+42/43     21 → -9                                                71.709
+43/43     -8 → 25                                                49.888
+
+
+Applying bridges (2025-03-11 15:03:29)
+--------------------------------------
+    Unicycler now applies to the graph in decreasing order of quality. This ensures that when multiple, contradictory bridges exist, the most supported option is used.
+
+Bridge type        Start → end   Path                              Quality
+simple long read       4 → 24    52                                 99.796
+miniasm               10 → 36                                       99.683
+simple long read       2 → -22   56                                 99.392
+miniasm              -44 → -7                                       99.105
+miniasm              -26 → 43                                       98.898
+miniasm               19 → 1                                        98.810
+miniasm                1 → 2                                        97.980
+miniasm              -13 → -16                                      96.790
+miniasm              -35 → -26                                      95.926
+miniasm                9 → -21                                      93.461
+miniasm              -22 → 4     60                                 91.677
+miniasm               12 → -41   -78, 57, 69                        90.648
+miniasm              -32 → 37    -73, -57, 71                       90.123
+miniasm               17 → -31                                      89.436
+miniasm               -7 → 28    51                                 88.569
+miniasm               15 → -13                                      88.535
+simple long read       8 → -29   52                                 88.140
+miniasm               28 → -33   -71, 57, 73                        86.917
+miniasm               43 → 23                                       81.396
+miniasm               36 → 5                                        80.809
+long read             11 → 18    -79, -77, -47, -75, -64            79.222
+miniasm              -29 → 10                                       75.535
+long read             44 → -23   -72, 68, 47, 77                    75.310
+long read             30 → 14    -74, 68, 47, 77, -82               74.441
+long read             -9 → 33    -72, 68, 47, -70                   71.780
+long read             37 → 30    64, 75, 47, 77, 67                 69.488
+miniasm                5 → -35                                      67.398
+miniasm              -20 → -6                                       67.279
+miniasm              -21 → 11                                       67.203
+miniasm              -25 → 8                                        66.130
+miniasm               24 → -20                                      64.815
+miniasm               -6 → 15                                       64.019
+simple long read     -16 → -25   56                                 63.703
+miniasm               14 → -39   -58                                57.660
+miniasm               18 → -32                                      56.678
+miniasm              -31 → 27                                       54.123
+miniasm                3 → 12    75, 47, -70                        49.963
+miniasm               27 → 3                                        46.735
+long read            -17 → 39    -67, -77, -47, -68, 74, -55, 58    43.663
+miniasm               34 → 38                                       28.625
+long read            -19 → 41                                       21.740
+miniasm               38 → 40                                       20.088
+long read             40 → 34                                        4.643
+
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/005_bridges_applied.gfa
+
+
+Bridged assembly graph (2025-03-11 15:03:29)
+--------------------------------------------
+    The assembly is now mostly finished and no more structural changes will be made. Ideally the assembly graph should now have one contig per replicon and no erroneous contigs (i.e. a complete assembly). If there are more contigs, then the assembly is not complete.
+
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/006_final_clean.gfa
+
+Component   Segments   Links   Length      N50         Longest segment   Status  
+    total          2       2   4,848,679   4,734,581         4,734,581           
+        1          1       1   4,734,581   4,734,581         4,734,581   complete
+        2          1       1     114,098     114,098           114,098   complete
+
+
+Rotating completed replicons (2025-03-11 15:03:29)
+--------------------------------------------------
+    Any completed circular contigs (i.e. single contigs which have one link connecting end to start) can have their start position changed without altering the sequence. For consistency, Unicycler now searches for a starting gene (dnaA or repA) in each such contig, and if one is found, the contig is rotated to start with that gene on the forward strand.
+
+Segment   Length      Depth   Starting gene     Position    Strand    Identity   Coverage
+      1   4,734,581   1.00x   UniRef90_A0KEC3   3,601,339   reverse      98.2%     100.0%
+      2     114,098   3.00x   UniRef90_A4SUC2      31,898   forward      93.4%     100.0%
+
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/007_rotated.gfa
+
+
+Assembly complete (2025-03-11 15:05:42)
+---------------------------------------
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/assembly.gfa
+Saving /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/358/3_ASSEMBLY/UNICYCLER_ASSEM/assembly.fasta
+
