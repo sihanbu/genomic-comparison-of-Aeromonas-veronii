@@ -1,0 +1,381 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
+\f3\fmodern\fcharset0 Courier;\f4\fmodern\fcharset0 Courier-Bold;\f5\fswiss\fcharset0 Helvetica;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red0\green0\blue0;
+\red251\green2\blue255;\red255\green255\blue255;\red251\green2\blue255;\red85\green142\blue40;\red251\green2\blue7;
+\red180\green36\blue25;}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c0\c0\c0;\csgray\c0\c0;
+\cssrgb\c100000\c25279\c100000;\cssrgb\c100000\c100000\c100000;\cssrgb\c100000\c25279\c100000;\cssrgb\c39975\c61335\c20601;\cssrgb\c100000\c14913\c0;
+\cssrgb\c76411\c21697\c12527;}
+\margl1440\margr1440\vieww26460\viewh17240\viewkind0
+\deftab720
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 Step1. Run fastqc on the raw short reads
+\f1\b0\fs22 \cf2 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+-bash-4.2$ module load fastqc/0.12.1\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+-bash-4.2$ fastqc \cf3 \cb4 DZ35XV_1_RAW_R1.fastq\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf2 \cb1 -bash-4.2$ fastqc \cf3 \cb4 DZ35XV_1_RAW_R2.fastq\
+\
+\cf5 FASTQC raw samples had a very low unique # of reads: \
+R1: Percent of seqs remaining if deduplicated 11.41% \
+R2: Percent of seqs remaining if deduplicated 24.39%\
+Needed to deduplicate reads to clean it up before the assembly\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f2\b \cf2 \cb1 Step2.Run Clumpify.sh on raw reads to clean up duplicates (nano script) \
+\'97> clumpify.sh is an add on to bbmap \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 #!/bin/bash\
+#SBATCH --job-name=dedupe_366_illumina\
+#SBATCH -N 1\
+#SBATCH -n 1\
+#SBATCH -c 20\
+#SBATCH --partition=general\
+#SBATCH --qos=general\
+#SBATCH --mail-type=END\
+#SBATCH --mem=30G\
+#SBATCH --mail-user=bbt24002@uconn.edu\
+#SBATCH -o %x_%j.out\
+#SBATCH -e %x_%j.err              \
+\
+module load bbmap/39.08 \
+clumpify.sh in1=/home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/1_SHORTR_TRIM/CLUMPIFY/DZ35XV_1_RAW_R1.fastq in2=/home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/1_SHORTR_TRIM/CLUMPIFY/DZ35XV_1_RAW_R2.fastq out1=KMM366_clumpify_R1.fastq out2=KMM366_clumpify_R2.fastq 
+\f4\b dedupe subs=2 optical spany adjacent dist=40
+\f1\b0\fs22 \cf3 \cb4 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf3 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f2\b \cf2 \cb1 Step3.Run Fastp to trim the short reads (nano script) \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 #!/bin/bash\
+#SBATCH --job-name=fastp_pclumpify \
+#SBATCH -N 1\
+#SBATCH -n 1\
+#SBATCH -c 10\
+#SBATCH --partition=general\
+#SBATCH --qos=general\
+#SBATCH --mail-type=END\
+#SBATCH --mem=20G\
+#SBATCH --mail-user=bbt24002@uconn.edu\
+#SBATCH -o %x_%j.out\
+#SBATCH -e %x_%j.err              \
+\
+module load fastp/0.23.2\
+fastp --in1 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/1_SHORTR_TRIM/CLUMPIFY/FASTQC/FASTP/KMM366_clumpify_R1.fastq --in2 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/1_SHORTR_TRIM/CLUMPIFY/FASTQC/FASTP/KMM366_clumpify_R2.fastq --out1 KMM366_fastp_R1.fastq --out2 KMM366_fastp_R2.fastq 
+\f4\b --dedup
+\f2\fs22 \cf2 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\b0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f2\b Step4.Run trimmomatic to trim out barcodes sequences and the beginning of the bad reads (nano script)\
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 #!/bin/bash\
+#SBATCH --job-name=\
+#SBATCH -N 1\
+#SBATCH -n 1\
+#SBATCH -c 10\
+#SBATCH --partition=general\
+#SBATCH --qos=general\
+#SBATCH --mail-type=END\
+#SBATCH --mem=10G\
+#SBATCH --mail-user=\
+#SBATCH -o %x_%j.out\
+#SBATCH -e %x_%j.err              \
+\
+module load Trimmomatic/0.39\
+java -jar $Trimmomatic PE /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/1_SHORTR_TRIM/CLUMPIFY/FASTQC/FASTP/TRIMMOMATIC/KMM366_fastp_R1.fastq /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/1_SHORTR_TRIM/CLUMPIFY/FASTQC/FASTP/TRIMMOMATIC/KMM366_fastp_R2.fastq KMM366_forward_paired_Ptrimmomatic.fastq KMM366_forward_unpaired_Ptrimmomatic.fastq KMM366_reverse_paired_Ptrimmomatic.fastq KMM366_reverse_unpaired_Ptrimmomatic.fastq 
+\f4\b ILLUMINACLIP:/home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/Adapters_barcodes.fa:2:30:10 HEADCROP:20 MINLEN:35
+\f3\b0 \
+\
+Using Medium Clipping Sequence: 'CTGTCTCTTATACACATCT'\
+Using Long Clipping Sequence: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'\
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'\
+Using Short Clipping Sequence: 'TCCTAATCAG'\
+ILLUMINACLIP: Using 0 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences\
+Quality encoding detected as phred33\
+Input Read Pairs: 11733831 Both Surviving: 11626537 (99.09%) Forward Only Surviving: 57459 (0.49%) Reverse Only Surviving: 109 (0.00%) Dropped: 49726 (0.42%)\
+TrimmomaticPE: Completed successfully\
+\
+\cf5 FASTQC was used after every step. After reviewing the trimmomatic outputs, unique reads had improved but not too much. \
+R1:Percent of seqs remaining if deduplicated 35.83%\
+R2: Percent of seqs remaining if deduplicated 50.48%\
+Analyzed the FASTQC results with Dr. Jill Wegerzn, said to remove low quality bases and start assembly. We know our sample should have a least 1 plasmid, high duplication can be because high copy plasmid\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f2\b\fs22 \cf2 \kerning1\expnd0\expndtw0 \CocoaLigature0 Step5.Rerun trimmomatic to trim out low quality sequences (nano script) \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 #!/bin/bash\
+#SBATCH --job-name=uality_trimming\
+#SBATCH -N 1\
+#SBATCH -n 1\
+#SBATCH -c 10\
+#SBATCH --partition=general\
+#SBATCH --qos=general\
+#SBATCH --mail-type=END\
+#SBATCH --mem=30G\
+#SBATCH --mail-user=bbt24002@uconn.edu\
+#SBATCH -o %x_%j.out\
+#SBATCH -e %x_%j.err      \
+\
+module load Trimmomatic/0.39\
+java -jar $Trimmomatic PE -phred33 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/DEDUPE_SR/KMM366_forward_paired_Ptrimmomatic.fastq /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/DEDUPE_SR/KMM366_reverse_paired_Ptrimmomatic.fastq KMM366_forward_paired_Ptrimmomatic.fastq KMM366_forward_unpaired_Ptrimmomatic.fastq KMM366_reverse_paired_Ptrimmomatic.fastq KMM366_reverse_unpaired_Ptrimmomatic.fastq 
+\f4\b SLIDINGWINDOW:4:20 \
+
+\f3\b0 \
+Input Read Pairs: 11626537 Both Surviving: 11392422 (97.99%) Forward Only Surviving: 224218 (1.93%) Reverse Only Surviving: 8594 (0.07%) Dropped: 1303 (0.01%)\
+TrimmomaticPE: Completed successfully
+\f4\b \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0 \cf0 \cb6 \
+
+\f4\b Run FASTQC on final trimmed reads: 
+\f3\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \cb1 \kerning1\expnd0\expndtw0 \CocoaLigature0 -bash-4.2$ fastqc 
+\f3\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 KMM366_forward_paired_Ptrimmomatic.fastq
+\f1\fs22 \cf2 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+-bash-4.2$ fastqc 
+\f3\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 KMM366_reverse_paired_Ptrimmomatic.fastq\cb6 \
+\pard\pardeftab720\partightenfactor0
+\cf7 \cb1 Final reads used for assembly: \
+R1: Percent of seqs remaining if deduplicated 36.86%\
+R2: Percent of seqs remaining if deduplicated 49.75%\
+* stopped deduplicating because didn\'92t want to loose valuable reads, I used many different softwares and workflows to deduplicate and this method seemed to give me a higher number of unique reads. I wasn\'92t really worried about loosing a lot of reads since we had a lot more compared to our other samples (289 & 358) \
+Start reads (R1/R2): \cf0 \cb6 22523637\cf7 \cb1 \
+Final reads (R1/R2): \cf0 \cb6 11392422\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs22 \cf2 \cb1 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+Step6. Run nanoplot on raw long reads\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\b0 -bash-4.2$ module load NanoPlot/1.41.6\
+(NanoPlot-1.41.6)-bash-4.2$ NanoPlot --fastq \cf3 \cb4 DZ35XV_RAW_KMM366.fastq \cf2 \cb1 --outdir 366_raw_qc --threads 4 --loglength\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f2\b Step7. Run porechop on raw long reads on my PC\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\b0 (base) natalyvargas@Natalys-MacBook-Air ~ % porechop -i \cf3 \cb4 DZ35XV_RAW_KMM366.fastq\cf2 \cb1  -o KMM366_porechop_LR.fastq\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f2\b # Loading reads\
+# \cf3 \cb4 DZ35XV_RAW_KMM366.fastq\cf2 \cb1 \
+# 89,304 reads loaded\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+#Looking for known adapter sets\
+#10,000 / 10,000 (100.0%)\
+\
+#                                         Best               \
+#                                        read       Best    \
+#                                        start      read end\
+#  \ul Set                                   %ID        %ID     \ulnone \
+#  SQK-NSK007                                72.4       79.2\
+#  ONT_adapters                              70.3        0.0\
+#  \cf8 Rapid                                    100.0        0.0\
+\cf3 #\cf8   Barcode 65 (forward)                      91.7       80.0\
+\cf3 #\cf8   Barcode 75 (forward)                     100.0		  76.9\
+\cf3 #\cf8   Barcode 81 (forward) 					  100.0       76.9\
+\cf3 #\cf8   Barcode 65 (forward)                     100.0       95.8\cf2 \
+                     \
+\
+#\ul \ulc2 Trimming adapters from read ends\ulnone \
+#  Rapid_adapter: \cf9 GTTTTCGCATTTATCGTGAAACGCTTTCGCGTTTTTCGTGCGCCGCTTCA\cf10 \
+\cf2 #  BC65:			 \cf9 \CocoaLigature1 TTCTCAGTCTTCCTCCAGACAAGG\cf2 \CocoaLigature0 		
+\f5\b0\fs24 \cf0 \CocoaLigature1 \
+
+\f2\b\fs22 \cf2 \CocoaLigature0 #  BC65_rev: 	 \cf9 \CocoaLigature1 CCTTGTCTGGAGGAAGACTGAGAA
+\f5\b0\fs24 \cf0 \
+
+\f2\b\fs22 \cf2 \CocoaLigature0 #  BC75:
+\f5\b0\fs24 \cf0 \CocoaLigature1                     
+\f2\b\fs22 \cf9 GACCATTGTGATGAACCCTGTTGT
+\f5\b0\fs24 \cf0 \
+
+\f2\b\fs22 \cf2 \CocoaLigature0 #  BC75_rev:      \cf9 \CocoaLigature1 ACAACAGGGTTCATCACAATGGTC\CocoaLigature0  \cf2   
+\f5\b0\fs24 \cf0 \CocoaLigature1 \
+
+\f2\b\fs22 \cf2 \CocoaLigature0 #  BC81:         \cf9  \CocoaLigature1 CCTCATCTTGTGAAGTTGTTTCGG\CocoaLigature0      \cf2  
+\f5\b0\fs24 \cf0 \CocoaLigature1 \
+
+\f2\b\fs22 \cf2 \CocoaLigature0 #  BC81_rev:      \cf9 \CocoaLigature1 CCGAAACAACTTCACAAGATGAGG
+\f5\b0\fs24 \cf0 \
+
+\f2\b\fs22 \cf2 \CocoaLigature0 #  BC88:          \cf9 \CocoaLigature1 TCTTCTACTACCGATCCGAAGCAG\cf2 \CocoaLigature0     
+\f5\b0\fs24 \cf0 \CocoaLigature1 \
+
+\f2\b\fs22 \cf2 \CocoaLigature0 #  BC88_rev:      \cf9 \CocoaLigature1 CTGCTTCGGATCGGTAGTAGAAGA\
+\
+\
+\cf2 \CocoaLigature0 # 89,304 / 89,304 (100.0%)\
+\
+# 21,163 / 89,304 reads had adapters trimmed from their start (333,580 bp removed)\
+# 11,607/ 89,304 reads had adapters trimmed from their end (113,861 bp removed)\
+# 8/89,304 split from middle \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf9 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+Step8. Run fastqc and nanoflit on raw long reads on cluster\
+
+\f1\b0 \cf5 Fastqc did not work for KMM366 because of over exceeding GC% content, decided on using the lowest parameters to ensure I didn\'92t over trim, used Nanoplot again to look at number of reads lost after porechop. \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\cf2 -bash-4.2$ module load nanofilt/2.6.0 
+\f2\b \
+\
+
+\f1\b0 (2.6.0) -bash-4.2$ NanoFilt \cf3 -q 12 -l 1000 --headcrop 10 --tailcrop 500 \cf2 KMM366_porechop_LR.fastq > KMM366_nanofilt_LR.fastq\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f2\b Step9. Run assemblies on cluster
+\f1\b0 \
+\
+
+\f2\b # Short read assembly (SPAdes) \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 #!/bin/bash\
+#SBATCH --job-name=SRA_366\
+#SBATCH -N 1\
+#SBATCH -n 1\
+#SBATCH -c 10\
+#SBATCH --partition=general\
+#SBATCH --qos=general\
+#SBATCH --mail-type=END\
+#SBATCH --mem=50G\
+#SBATCH --mail-user=bbt24002@uconn.edu\
+#SBATCH -o %x_%j.out\
+#SBATCH -e %x_%j.err\
+\
+module load SPAdes/3.15.2\
+spades.py -1 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_forward_paired_Ptrimmomatic.fastq -2 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_reverse_paired_Ptrimmomatic.fastq -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/SRA\
+\
+
+\f4\b # Long read assembly (FLYE) \
+
+\f3\b0 #!/bin/bash\
+#SBATCH --job-name=flye_366\
+#SBATCH -N 1\
+#SBATCH -n 1\
+#SBATCH -c 20\
+#SBATCH --partition=general\
+#SBATCH --qos=general\
+#SBATCH --mail-type=END\
+#SBATCH --mem=50G\
+#SBATCH --mail-user=bbt24002@uconn.edu\
+#SBATCH -o %x_%j.out\
+#SBATCH -e %x_%j.err   \
+\
+module load flye/2.9.5\
+flye --nano-raw /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_nanofilt_LR.fastq --out-dir /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FLYE\
+
+\f2\b\fs22 \cf2 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+# Hybrid Assembly 1 (SPAdes) \
+
+\f3\b0\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 #!/bin/bash\
+#SBATCH --job-name=spades_hybrid_366\
+#SBATCH -N 1\
+#SBATCH -n 1\
+#SBATCH -c 20\
+#SBATCH --partition=general\
+#SBATCH --qos=general\
+#SBATCH --mail-type=END\
+#SBATCH --mem=75G\
+#SBATCH --mail-user=bbt24002@uconn.edu\
+#SBATCH -o %x_%j.out\
+#SBATCH -e %x_%j.err   \
+\
+module load SPAdes/3.15.2\
+spades.py -1 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_forward_paired_Ptrimmomatic.fastq -2 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_reverse_paired_Ptrimmomatic.fastq --nanopore /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_nanofilt_LR.fastq -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/SPADES_hybrid\
+\
+
+\f4\b # Hybrid Assembly 2 (Unicycler) \
+
+\f3\b0 #!/bin/bash\
+#SBATCH --job-name=366_unicycer\
+#SBATCH -N 1\
+#SBATCH -n 1\
+#SBATCH -c 10\
+#SBATCH --partition=general\
+#SBATCH --qos=general\
+#SBATCH --mail-type=END\
+#SBATCH --mem=75G\
+#SBATCH --mail-user=bbt24002@\
+#SBATCH -o %x_%j.out\
+#SBATCH -e %x_%j.err  \
+\
+module load unicycler/0.5.0\
+unicycler -1 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_forward_paired_Ptrimmomatic.fastq -2 /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_reverse_paired_Ptrimmomatic.fastq -l /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/FINAL_READS/KMM366_nanofilt_LR.fastq -o /home/FCAM/nvargas/2025Feb18_Nataly_289_358_assembly/366/3_ASSEMBLY/UNICYCLER --min_fasta_length 50 --mode bold\
+\
+
+\f4\b Step 10: compare output assemblies to then annotate \
+
+\f3\b0 FLYE: 16 fragments\
+SPADES_SHORT_READ:3,335 nodes \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf0 UNICYLER Hybrid: 4 rotating completed replicons (BEST) 
+\f3\b0 \
+SPAdes Hybrid: 3,138 nodes 
+\f4\b \
+\
+Step 11: Prokka annotation on PC \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\b0\fs22 \cf2 \kerning1\expnd0\expndtw0 \CocoaLigature0 (base) natalyvargas@Natalys-MacBook-Air ~ % prokka --outdir kmm366_annotation --prefix unicycler_kmm366_final_assembly.fasta /Users/natalyvargas/Downloads/unicycler_kmm366_final_assembly.fasta
+\f4\b\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs22 \cf2 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f1\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+
+\f2\b \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+\
+\
+\
+}
