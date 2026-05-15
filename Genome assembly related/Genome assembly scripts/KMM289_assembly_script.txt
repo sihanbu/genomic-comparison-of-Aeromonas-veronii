@@ -1,0 +1,219 @@
+KMM289  
+
+# Raw FastQC Short Reads
+
+#!/bin/bash
+#SBATCH --job-name=fastQC
+#SBATCH -N 1 
+#SBATCH -n 1
+#SBATCH -c 2
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mem=5G
+#SBATCH --mail-user=bbt24002@uconn.edu
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+module load fastqc/0.12.1
+fastqc your_sequence_file.fastq 
+
+# Raw FastQC Long Reads
+
+#!/bin/bash 
+#SBATCH --job-name=Nanoplot
+#SBATCH -N 1 
+#SBATCH -n 1 
+#SBATCH -c 10 
+#SBATCH --partition=general 
+#SBATCH --qos=general 
+#SBATCH --mail-type=ALL 
+#SBATCH --mem=5G 
+#SBATCH --mail-user=<your_email@uconn.edu> 
+#SBATCH -o %x_%j.out 
+#SBATCH -e %x_%j.err
+
+module load NanoPlot/1.41.6
+NanoPlot --fastq your_sample_sequence.fastq --outdir Sample_output --threads --loglength
+
+# Filtering Short Reads w/ Fastp 
+
+#!/bin/bash
+#SBATCH --job-name=fastp
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -c 10
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=END
+#SBATCH --mem=30G
+#SBATCH --mail-user=<your_email@uconn.edu>
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+module load fastp/0.23.2
+fastp --in1 KMM_sample_R1_001.fastq --in2 KMM_sample_R2_001.fastq --out1 filtered_KMM_sample_fastp_R1.fastq --out2 filtered_KMM_sample_fastp_R2.fastq --html KMM_sample
+
+# Trimming Short Reads w/ Trimmomatic 
+
+#!/bin/bash
+#SBATCH --job-name=trimmomatic
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -c 10
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=END
+#SBATCH --mem=30G
+#SBATCH --mail-user=<your_email@uconn.edu>
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+module load Trimmomatic/0.39
+java -jar $Trimmomatic PE filtered_KMM_sample_fastp_R1.fastq filtered_KMM_sample_fastp_R2.fastq KMM_sample_forward_paired_Ptrimmomatic.fastq KMM_sample_forward_unpaired_Ptrimmomatic.fastq KMM_sample_reverse_paired_Ptrimmomatic.fastq KMM_sample_reverse_unpaired_Ptrimmomatic.fastq ILLUMINACLIP:KMM_sample/Adapters_barcodes.fa:2:30:10 HEADCROP:15
+
+## after each step FastQC was done to view the number of reads we had before and after, making sure we don't loose too many reads 
+
+# Filtering Long reads w/ porechop 
+
+#!/bin/bash 
+#SBATCH --job-name=Porechop 
+#SBATCH -N 1 
+#SBATCH -n 1 
+#SBATCH -c 10 
+#SBATCH --partition=general 
+#SBATCH --qos=general 
+#SBATCH --mail-type=ALL 
+#SBATCH --mem=15G 
+#SBATCH --mail-user=<your_email@uconn.edu> 
+#SBATCH -o %x_%j.out 
+#SBATCH -e %x_%j.err
+
+module load Porechop/0.2.4
+porechop -i KMM_sample_long_read.fastqc -o KMM_sample_porechop.fastq
+
+# Trimming Long reads w/ NanoFilt 
+#!/bin/bash
+#SBATCH --job-name=nanofilt
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -c 10
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=END
+#SBATCH --mem=30G
+#SBATCH --mail-user=<your_email@uconn.edu>
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+module load nanofilt/2.6.0
+NanoFilt -q 12 -l 1000 --headcrop 10 --tailcrop 2000 KMM_sample_porechop_LR.fastq > KMM_sample_nanofilt_LR.fastq
+
+## Fastqc and Nanoplot were ran after each filtering & trimming step: make sure we didn't loose too many reads 
+
+# Unicycler Assembly (the one we will be using for downstream analysis) 
+
+#!/bin/bash
+#SBATCH --job-name=Unicycler_Assembly
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -c 10
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=END
+#SBATCH --mem=50G
+#SBATCH --mail-user=<your_email@uconn.edu>
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+module load unicycler/0.5.0
+unicycler -1 KMM_sample_forward_paired_Ptrimmomatic_R1.fastq -2 KMM_sample_reverse_paired_Ptrimmomatic_R2.fastq -l KMM_sample_nanofilt.fastq -o KMM_Sample_Assembly --min_fasta_length 50 --mode bold
+
+## Once assemblies were complete, quality control softwares were used to check for contamination, completion, and contiguity
+
+#BUSCO for unicycler assembly
+
+#!/bin/bash 
+#SBATCH --job-name=BUSCO 
+#SBATCH -N 1 
+#SBATCH -n 1 
+#SBATCH -c 10 
+#SBATCH --partition=general 
+#SBATCH --qos=general 
+#SBATCH --mail-type=END 
+#SBATCH --mem=10G 
+#SBATCH --mail-user=<your_email@uconn.edu> 
+#SBATCH -o %x_%j.out 
+#SBATCH -e %x_%j.err   
+ 
+module load busco/6.0.0
+busco -i KMM_sample_final_assembly.fasta -o BUSCO_KMM_sample_OUTPUT -l aeromonas_odb12 -m genome --cpu 20
+
+#QUAST for unicycler assembly 
+
+#SBATCH --job-name=QUAST
+#SBATCH -N 1 
+#SBATCH -n 1 
+#SBATCH -c 10 
+#SBATCH --partition=general 
+#SBATCH --qos=general 
+#SBATCH --mail-type=END 
+#SBATCH --mem=5G 
+#SBATCH --mail-user=<your_email@uconn.edu> 
+#SBATCH -o %x_%j.out 
+#SBATCH -e %x_%j.err   
+                     
+module load quast/5.2.0 
+quast.py KMM_sample_final_assembly.fasta --threads 25 --o QUAST_KMM_sample 
+
+#CheckM for contamination (unicycler assembly) 
+#!/bin/bash 
+#SBATCH --job-name=CheckM
+#SBATCH -N 1 
+#SBATCH -n 1 
+#SBATCH -c 10 
+#SBATCH --partition=general 
+#SBATCH --qos=general 
+#SBATCH --mail-type=END 
+#SBATCH --mem=10G 
+#SBATCH --mail-user=<your_email@uconn.edu> 
+#SBATCH -o %x_%j.out 
+#SBATCH -e %x_%j.err   
+ 
+module load CheckM/1.1.3 
+checkm lineage_wf -t 8 -x fasta BIN_assemblies Checkm_output 
+
+#Compleasm (completion) 
+ 
+#!/bin/bash
+#SBATCH --job-name=Compleasm
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -c 10
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=END
+#SBATCH --mem=10G
+#SBATCH --mail-user=<your_email@uconn.edu>
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+module load singularity
+singularity exec /../../compleasm_v0.2.6.sif compleasm run -a KMM_sample_final_assembly.fasta -o KMM_sample_final_assembly -l bacteria -t 8
+
+#Prokka annotation (final genome annotation)
+#!/bin/bash
+#SBATCH --job-name=Prokka
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -c 10
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=END
+#SBATCH --mem=5G
+#SBATCH --mail-user=<your_email@uconn.edu>
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+module load prokka/1.14.6
+prokka --outdir KMM_sample_output --prefix KMM_sample_assembly KMM_sample_final_assembly.fasta
