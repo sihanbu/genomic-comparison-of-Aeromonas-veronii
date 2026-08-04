@@ -1,0 +1,252 @@
+﻿Group,Virulence factors,Genes
+Adherence,Flp/Tad pili,flpL
+Adherence,Flp/Tad pili,flpK
+Adherence,Flp/Tad pili,flpJ
+Adherence,Flp/Tad pili,flpI
+Adherence,Flp/Tad pili,flpH
+Adherence,Flp/Tad pili,flpG
+Adherence,Flp/Tad pili,flpF
+Adherence,Flp/Tad pili,flpE
+Adherence,Flp/Tad pili,flpD
+Adherence,Flp/Tad pili,flpC
+Adherence,Flp/Tad pili,flpB
+Adherence,Flp/Tad pili,flpA
+Adherence,Flp/Tad pili,flp1
+Adherence,MSHA type IV pili,mshQ
+Adherence,MSHA type IV pili,mshP
+Adherence,MSHA type IV pili,mshO
+Adherence,MSHA type IV pili,mshD
+Adherence,MSHA type IV pili,mshC
+Adherence,MSHA type IV pili,mshA
+Adherence,MSHA type IV pili,mshB
+Adherence,MSHA type IV pili,mshF
+Adherence,MSHA type IV pili,mshG
+Adherence,MSHA type IV pili,mshE
+Adherence,MSHA type IV pili,mshN
+Adherence,MSHA type IV pili,mshM
+Adherence,MSHA type IV pili,mshL
+Adherence,MSHA type IV pili,mshK
+Adherence,MSHA type IV pili,mshJ
+Adherence,MSHA type IV pili,mshI1
+Adherence,MSHA type IV pili,mshI
+Adherence,Tap type IV pili,tapD/pilD
+Adherence,Tap type IV pili,tapA
+Adherence,Tap type IV pili,tapB
+Adherence,Tap type IV pili,tapC
+Adherence,Tap type IV pili,tapM
+Adherence,Tap type IV pili,tapN
+Adherence,Tap type IV pili,tapO
+Adherence,Tap type IV pili,tapP
+Adherence,Tap type IV pili,tapQ
+Adherence,Tap type IV pili,tapT
+Adherence,Tap type IV pili,tapU
+Adherence,Tap type IV pili,tapW
+Adherence,Tap type IV pili,tppA
+Adherence,Tap type IV pili,tppB
+Adherence,Tap type IV pili,tppC
+Adherence,Tap type IV pili,tppD
+Adherence,Tap type IV pili,tapY1
+Adherence,Tap type IV pili,tapY2
+Adherence,Tap type IV pili,tppE
+Adherence,Tap type IV pili,tppF
+Adherence,Tap type IV pili,tapV
+Adherence,Tap type IV pili,tapF
+Adherence,Type I pili,fimA
+Adherence,Type I pili,fimC
+Adherence,Type I pili,fimD
+Adherence,Type I pili,fimE
+Adherence,Type I pili,fimF
+"Effector delivery system	",Exe T2SS,exeA
+"Effector delivery system	",Exe T2SS,exeB
+"Effector delivery system	",Exe T2SS,exeC
+"Effector delivery system	",Exe T2SS,exeD
+"Effector delivery system	",Exe T2SS,exeE
+"Effector delivery system	",Exe T2SS,exeF
+"Effector delivery system	",Exe T2SS,exeG
+"Effector delivery system	",Exe T2SS,exeH
+"Effector delivery system	",Exe T2SS,exeI
+"Effector delivery system	",Exe T2SS,exeJ
+"Effector delivery system	",Exe T2SS,exeK
+"Effector delivery system	",Exe T2SS,exeL
+"Effector delivery system	",Exe T2SS,exeM
+"Effector delivery system	",Exe T2SS,exeN
+"Effector delivery system	",Exe T2SS,tapD/pilD
+"Effector delivery system	",T3SS,ascL
+"Effector delivery system	",T3SS,ascK
+"Effector delivery system	",T3SS,ascJ
+"Effector delivery system	",T3SS,ascI
+"Effector delivery system	",T3SS,ascH
+"Effector delivery system	",T3SS,ascG
+"Effector delivery system	",T3SS,ascF
+"Effector delivery system	",T3SS,ascE
+"Effector delivery system	",T3SS,ascD
+"Effector delivery system	",T3SS,ascC
+"Effector delivery system	",T3SS,ascB
+"Effector delivery system	",T3SS,exsD
+"Effector delivery system	",T3SS,exsA
+"Effector delivery system	",T3SS,exsB
+"Effector delivery system	",T3SS,exsE
+"Effector delivery system	",T3SS,exsC
+"Effector delivery system	",T3SS,aopD
+"Effector delivery system	",T3SS,aopB
+"Effector delivery system	",T3SS,acrH
+"Effector delivery system	",T3SS,acrV
+"Effector delivery system	",T3SS,acrG
+"Effector delivery system	",T3SS,acrR
+"Effector delivery system	",T3SS,ascV
+"Effector delivery system	",T3SS,ascY
+"Effector delivery system	",T3SS,ascX
+"Effector delivery system	",T3SS,acr2
+"Effector delivery system	",T3SS,acr1
+"Effector delivery system	",T3SS,aopN
+"Effector delivery system	",T3SS,ascN
+"Effector delivery system	",T3SS,ascO
+"Effector delivery system	",T3SS,ascP
+"Effector delivery system	",T3SS,ascQ
+"Effector delivery system	",T3SS,ascR
+"Effector delivery system	",T3SS,ascS
+"Effector delivery system	",T3SS,ascT
+"Effector delivery system	",T3SS,ascU
+"Effector delivery system	",T3SS,aopX
+"Effector delivery system	",T3SS,sycX
+"Effector delivery system	",T3SS,sycH
+"Effector delivery system	",T3SS,aopH
+"Effector delivery system	",T3SS,ati2
+"Effector delivery system	",T3SS,ati1
+"Effector delivery system	",T3SS,sycO
+"Effector delivery system	",T3SS,aopO
+"Effector delivery system	",T3SS,aexT
+"Effector delivery system	",T6SS,hcp1
+"Effector delivery system	",T6SS,hcp
+"Effector delivery system	",T6SS,vgrG2
+"Effector delivery system	",T6SS,atsA
+"Effector delivery system	",T6SS,atsB
+"Effector delivery system	",T6SS,atsC
+"Effector delivery system	",T6SS,atsD
+"Effector delivery system	",T6SS,vipA
+"Effector delivery system	",T6SS,vipB
+"Effector delivery system	",T6SS,atsG
+"Effector delivery system	",T6SS,atsH
+"Effector delivery system	",T6SS,atsI
+"Effector delivery system	",T6SS,atsJ
+"Effector delivery system	",T6SS,atsK
+"Effector delivery system	",T6SS,atsL
+"Effector delivery system	",T6SS,dotU
+"Effector delivery system	",T6SS,clpB
+"Effector delivery system	",T6SS,vasH
+"Effector delivery system	",T6SS,atsP
+"Effector delivery system	",T6SS,atsQ
+"Effector delivery system	",T6SS,vasK/icmF
+"Effector delivery system	",T6SS,atsS
+"Effector delivery system	",T6SS,vgrG3
+"Effector delivery system	",T6SS secreted effectors,vgrG1
+Motility,Lateral flagella,lfiM
+Motility,Lateral flagella,lfiN
+Motility,Lateral flagella,fliP
+Motility,Lateral flagella,lfiQ
+Motility,Lateral flagella,lfiR
+Motility,Lateral flagella,lfhB
+Motility,Lateral flagella,lfhA
+Motility,Lateral flagella,lafK
+Motility,Lateral flagella,lfiE
+Motility,Lateral flagella,fliF
+Motility,Lateral flagella,fliG
+Motility,Lateral flagella,lfiH
+Motility,Lateral flagella,lfiI
+Motility,Lateral flagella,lfiJ
+Motility,Lateral flagella,lfgN
+Motility,Lateral flagella,lfgM
+Motility,Lateral flagella,lfgA
+Motility,Lateral flagella,lfgB
+Motility,Lateral flagella,flgC
+Motility,Lateral flagella,flgE
+Motility,Lateral flagella,lfgF
+Motility,Lateral flagella,lfgG
+Motility,Lateral flagella,lfgH
+Motility,Lateral flagella,flgI
+Motility,Lateral flagella,flgJ
+Motility,Lateral flagella,lfgK
+Motility,Lateral flagella,lfgL
+Motility,Lateral flagella,maf-5
+Motility,Lateral flagella,lafB
+Motility,Lateral flagella,lafC
+Motility,Lateral flagella,lafX
+Motility,Lateral flagella,lafE
+Motility,Lateral flagella,lafF
+Motility,Lateral flagella,lafS
+Motility,Lateral flagella,lafT
+Motility,Lateral flagella,lafU
+Motility,Polar flagella,motX
+Motility,Polar flagella,fliE
+Motility,Polar flagella,fliF
+Motility,Polar flagella,fliG
+Motility,Polar flagella,fliH
+Motility,Polar flagella,fliI
+Motility,Polar flagella,fliJ
+Motility,Polar flagella,fliK
+Motility,Polar flagella,fliL
+Motility,Polar flagella,fliM
+Motility,Polar flagella,fliN
+Motility,Polar flagella,fliO
+Motility,Polar flagella,fliP
+Motility,Polar flagella,fliQ
+Motility,Polar flagella,fliR
+Motility,Polar flagella,flhB
+Motility,Polar flagella,flhA
+Motility,Polar flagella,flhF
+Motility,Polar flagella,flhG
+Motility,Polar flagella,fliA
+Motility,Polar flagella,cheY
+Motility,Polar flagella,cheZ
+Motility,Polar flagella,cheA-2
+Motility,Polar flagella,cheB-2
+Motility,Polar flagella,motA
+Motility,Polar flagella,pomB
+Motility,Polar flagella,-
+Motility,Polar flagella,cheW
+Motility,Polar flagella,flaA
+Motility,Polar flagella,flaB
+Motility,Polar flagella,flaG
+Motility,Polar flagella,flaH
+Motility,Polar flagella,flaJ
+Motility,Polar flagella,maf-1
+Motility,Polar flagella,motY
+Motility,Polar flagella,flrC
+Motility,Polar flagella,flrB
+Motility,Polar flagella,flrA
+Motility,Polar flagella,flgL
+Motility,Polar flagella,flgK
+Motility,Polar flagella,flgJ
+Motility,Polar flagella,flgI
+Motility,Polar flagella,flgH
+Motility,Polar flagella,flgG
+Motility,Polar flagella,flgF
+Motility,Polar flagella,flgE
+Motility,Polar flagella,flgD
+Motility,Polar flagella,flgC
+Motility,Polar flagella,flgB
+Motility,Polar flagella,cheR-3
+Motility,Polar flagella,cheV
+Motility,Polar flagella,flgA
+Motility,Polar flagella,flgM
+Motility,Polar flagella,flgN
+Motility,Polar flagella,pomB2
+Motility,Polar flagella,pomA2
+Motility,Polar flagella,flmH
+Motility,Polar flagella,-
+Motility,Polar flagella,nueA
+Motility,Polar flagella,flmD
+Motility,Polar flagella,nueB
+Motility,Polar flagella,maf-2
+Exotoxin,Aerolysin,aerA/act
+Exotoxin,Extracellular hemolysin AHH1,ahh1
+Exotoxin,"Heat-stable cytotonic enterotoxin, Ast",ast
+Exotoxin,Hemolysin HlyA,hlyA
+Exotoxin,Hemolysin III,-
+Exotoxin,RtxA,rtxA
+Exotoxin,RtxA,rtxC
+Exotoxin,RtxA,rtxH
+Exotoxin,RtxA,rtxB
+Exotoxin,RtxA,rtxD
+Exotoxin,RtxA,rtxE
+Exotoxin,Thermostable hemolysin (TH),-

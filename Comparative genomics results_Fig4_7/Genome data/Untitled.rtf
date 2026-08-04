@@ -1,0 +1,348 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww17940\viewh16400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 Figure 1\
+\
+Figure 2\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Figure 3\
+\
+Figure 4\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+Figure 4. Pan-genome + COG annotation\
+### In a\'92nvio
+\f1\b0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 #Run it with COG annotation\
+for db in *-contigs.db\
+do\
+    echo "Running COG annotation on $db"\
+\
+    anvi-run-ncbi-cogs \\\
+        -c "$db" \\\
+        -T 12\
+done\
+\
+\
+#update genome database\
+anvi-gen-genomes-storage \\\
+    -e external-genomes.txt \\\
+    -o COG-All-GENOMES.db\
+\
+#create pangenome database\
+anvi-pan-genome \\\
+    --genomes-storage COG-All-GENOMES.db \\\
+    --project-name All-GENOMES_COG \\\
+    -T 12\
+\
+anvi-summarize \\\
+    -p All-GENOMES_COG-PAN.db \\\
+    -g COG-All-GENOMES.db \\\
+    -o Pangenome_summary_COG\kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+#visulization\
+\pard\pardeftab720\partightenfactor0
+\cf0 #layers\
+anvi-import-misc-data -p All-GENOMES_COG-PAN.db \\\
+                      -t layers \\\
+                      --just-do-it \\\
+                      host-genomes.txt\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+anvi-display-pan \\\
+  -g COG-All-GENOMES.db \\\
+  -p All-GENOMES_COG-PAN.db\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\
+\
+
+\f0\b ## COG annotation heatmap in R studio\
+
+\f1\b0 setwd("/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\\ genome\\ assembly/2026Mar04_Biolog_Analysis_new_data/selected\\ genomes\\ comparision/01_PANGENOME/New\\ with\\ 24\\ genomes/SUMMARY_pangenome_bins")\
+\
+cog_pan_sum<- read.delim("All-GENOMES_COG_gene_clusters_summary.txt",stringsAsFactors = FALSE)\
+\
+cog_pan <- cog_pan_sum[cog_pan_sum$COG24_CATEGORY != "", ]\
+\
+#use this info in txt, use cog_pan_sum regardless of cog annotation\
+summary_bin<- cog_pan_sum %>%\
+  group_by(bin_name) %>%\
+  summarise(n = n(), .groups = "drop")\
+\
+\
+summary(cog_pan)\
+\
+\
+summary <- cog_pan %>%\
+  group_by(bin_name,genome_name,COG24_CATEGORY) %>%\
+  summarise(n = n(), .groups = "drop")\
+\
+#most abundant regardless bin and genome name\
+summary_category<-cog_pan %>%\
+  group_by(COG24_CATEGORY) %>%\
+  summarise(n = n(), .groups = "drop")\
+\
+factor(summary$genome_name)\
+#change the names \
+# Ho04_635 to  Ho04-635\
+# b1_3  to b1-3 \
+# Hv98_241  to Hv98-241 \
+# Hv98_571  to  Hv98-571\
+summary <- summary %>%\
+  mutate(\
+    genome_name = dplyr::recode(\
+      genome_name,\
+      "Ho04_635" = "Ho04-635",\
+      "b1_3" = "b1-3",\
+      "Hv98_241" = "Hv98-241",\
+      "Hv98_571" = "Hv98-571",\
+      "AV1708_29120" = "1708-29120",\
+      "AV183026" = "183026",\
+      "Hv96_22" = "Hv96-22",\
+      "Hv98_571" = "Hv98-571",\
+      "Hv98_241"="Hv98-241",\
+      "Hv98_231" ="Hv98-231",\
+      "Hv98_232" = "Hv98-232",\
+      "Hv98_225" = "Hv98-225"))\
+\
+ \
+\
+my_levels <- c("Hv98-571", "Hm22", "KMM366", "KMM358",\
+               "Hv98-231", "Hv98-232", "Hv98-241", "Hm21", "Ho04-635",\
+               "b1-3", "1708-29120", "ANYA_14430", "ANYA_13997", "FC951",\
+               "AV040", "KMM289", "D3", "Hv98-225", "ANYA_18196",\
+               "FDAARGOS_632", "AV0110", "C4", "ZfB1", "183026")\
+\
+\
+top25 <- summary %>%\
+  group_by(COG24_CATEGORY) %>%\
+  summarise(total = sum(n), .groups = "drop")\
+\
+\
+#Make heatmap\
+\
+##top 25 in core gene cluster\
+top25_core <- summary %>%\
+  filter(bin_name == "Core") %>%\
+  group_by(COG24_CATEGORY) %>%\
+  summarise(total = sum(n), .groups = "drop") %>%\
+  arrange(desc(total)) %>%\
+  slice_head(n = 25) %>%\
+  pull(COG24_CATEGORY)\
+\
+\
+#make heatmaps on core and unique \
+core <- summary %>%\
+  filter(bin_name == "Core",COG24_CATEGORY %in% top25_core) %>%\
+  select(-bin_name) %>%\
+  pivot_wider(names_from = COG24_CATEGORY,values_from = n,values_fill = 0) \
+  \
+core <- core[match(my_levels, core$genome_name), ]\
+core<-column_to_rownames(core, var = "genome_name")\
+core_mat <- t(as.matrix(core))\
+\
+\
+\
+rownames(core_mat) <- str_wrap(rownames(core_mat), width = 35)\
+\
+p1<-pheatmap(\
+  core_mat,\
+  color = colorRampPalette(c("white", "#c6dbef", "#6baed6", "#2171b5", "#08306b"))(100),\
+  cluster_rows = FALSE,\
+  cluster_cols = FALSE,\
+  border_color = "grey90",\
+  fontsize_row = 10,\
+  fontsize_col = 8,\
+  angle_col = "45",\
+  main = "Core gene clusters of pan-genome")\
+\
+\
+#export as a svg file\
+svglite("Core_gene_clusters_heatmap.svg",width = 10,height = 10)\
+print(p1)      \
+dev.off()\
+\
+\
+top25_unique <- summary %>%\
+  filter(bin_name == "Unique") %>%\
+  group_by(COG24_CATEGORY) %>%\
+  summarise(total = sum(n), .groups = "drop") %>%\
+  arrange(desc(total)) %>%\
+  slice_head(n = 25) %>%\
+  pull(COG24_CATEGORY)\
+\
+unique <- summary %>%\
+  filter(bin_name == "Unique",COG24_CATEGORY %in% top25_unique) %>%\
+  select(-bin_name) %>%\
+  pivot_wider(names_from = COG24_CATEGORY,values_from = n,values_fill = 0) \
+\
+unique <- unique[match(my_levels, unique$genome_name), ]\
+unique<-as.data.frame(unique)\
+# 4 of them doesn't have unique genome - same as the circular chart\
+unique$genome_name[is.na(unique$genome_name)] <-\
+  c("Hv98-571", "Hm22", "Hv98-231", "Hv98-232")\
+\
+\
+unique<-column_to_rownames(unique, var = "genome_name")\
+unique_mat <- t(as.matrix(unique))\
+\
+\
+rownames(unique_mat) <- str_wrap(rownames(unique_mat), width = 35)\
+\
+p2<-pheatmap(\
+  unique_mat,\
+  color = colorRampPalette(c("white", "#c6dbef", "#6baed6", "#2171b5", "#08306b"))(100),\
+  cluster_rows = FALSE,\
+  cluster_cols = FALSE,\
+  border_color = "grey90",\
+  fontsize_row = 10,\
+  fontsize_col = 8,\
+  angle_col = "45",\
+  main = "Unique gene clusters of pan-genome")\
+\
+#export as a svg file\
+svglite("Unique_gene_clusters_heatmap.svg",width = 10,height = 8)\
+print(p2)      \
+dev.off()\
+\
+\
+
+\f0\b \
+Figure5. Pan-genome rarefaction cure\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 ### In a\'92nvio\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 anvi-compute-rarefaction-curves -p \kerning1\expnd0\expndtw0 \outl0\strokewidth0 All-GENOMES_COG-PAN.db
+\f0\b \
+\
+\
+Figure6. Phylogenomics tree + ANI
+\f1\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 ### In a\'92nvio
+\f1\b0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 anvi-get-sequences-for-gene-clusters -p All-GENOMES_COG-PAN.db \\\
+                                     -g COG-All-GENOMES.db \\\
+                                     --min-num-genomes-gene-cluster-occurs 24 \\\
+                                     --max-num-genes-from-each-genome 1 \\\
+                                     --concatenate-gene-clusters \\\
+                                     --output-file All-Averoni-SCGs.fa\
+\
+\
+trimal -in All-Averoni-SCGs.fa \\\
+       -out All-Averoni-SCGs-clean.fa \\\
+       -gt 0.50\
+\
+iqtree -s All-Averoni-SCGs-clean.fa \\\
+       -nt 8 \\\
+       -m WAG \\\
+       -bb 1000\
+\
+\
+##
+\f0\b  
+\f1\b0 ANI visualization\
+### takes a long time \
+anvi-compute-genome-similarity -e external-genomes.txt \\\
+                               -p All-GENOMES_COG-PAN.db   \\\
+                               -o ANI \\\
+                               --program pyANI \\\
+                               -T 12\
+\
+\
+
+\f0\b \
+### In R studio
+\f1\b0 \
+setwd("/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\\ genome\\ assembly/2026Mar04_Biolog_Analysis_new_data/selected\\ genomes\\ comparision/01_PANGENOME/New\\ with\\ 24\\ genomes/ANI")\
+\
+ANI<- read.delim("ANIb_percentage_identity.txt",stringsAsFactors = FALSE)\
+ANI<- as.data.frame(ANI)\
+ANI<-column_to_rownames(ANI, var = "key")\
+\
+name_map <- c(\
+  "Ho04_635" = "Ho04-635",\
+  "b1_3" = "b1-3",\
+  "Hv98_241" = "Hv98-241",\
+  "Hv98_571" = "Hv98-571",\
+  "AV1708_29120" = "1708-29120",\
+  "AV183026" = "183026",\
+  "Hv98_231" = "Hv98-231",\
+  "Hv98_232" = "Hv98-232",\
+  "Hv98_225" = "Hv98-225")\
+\
+# Rename row names\
+idx <- rownames(ANI) %in% names(name_map)\
+rownames(ANI)[idx] <- name_map[rownames(ANI)[idx]]\
+\
+# Rename column names\
+idx <- colnames(ANI) %in% names(name_map)\
+colnames(ANI)[idx] <- name_map[colnames(ANI)[idx]]\
+\
+my_levels <- c("AV0110","Hv98-225", "AV040", \
+               "FDAARGOS_632", "1708-29120",  "b1-3", "KMM358", "KMM366", "C4","KMM289",\
+               "Hm22","Hv98-571","Hv98-231", "Hv98-232","Hm21" ,"Ho04-635",\
+               "Hv98-241",  "FC951","D3","ANYA_18196","183026",\
+               "ZfB1","ANYA_13997", "ANYA_14430")\
+\
+ \
+ANI <- ANI[my_levels, my_levels]\
+\
+\
+pheatmap(\
+  ANI,\
+  color = colorRampPalette(c("white", "#D55E00"))(100),\
+  cluster_rows = FALSE,\
+  cluster_cols = FALSE,\
+  border_color = "grey90",\
+  fontsize_row = 10,\
+  fontsize_col = 8)\
+\
+\
+#### claude assignment\
+ \
+library(ComplexHeatmap)\
+library(circlize)\
+\
+col_fun <- colorRamp2(\
+  seq(min(ANI), max(ANI), length.out = 100),\
+  colorRampPalette(c("white", "#D55E00"))(100)\
+)\
+\
+aniheatmap<-Heatmap(\
+  as.matrix(ANI),\
+  col = col_fun,\
+  cluster_rows = FALSE,\
+  cluster_columns = FALSE,\
+  rect_gp = gpar(col = "grey90", lwd = 0.5),   # border_color equivalent\
+  row_names_side = "left",                      # y labels on LEFT\
+  column_names_side = "top",                    # x labels on TOP\
+  row_names_gp = gpar(fontsize = 10),           # fontsize_row\
+  column_names_gp = gpar(fontsize = 10),         # fontsize_col                \
+  heatmap_legend_param = list(title = "ANI"))\
+\
+\
+\
+#export as a svg file\
+svglite("ANI_heatmap.svg",width = 6,height = 5)\
+print(aniheatmap)      \
+dev.off()}

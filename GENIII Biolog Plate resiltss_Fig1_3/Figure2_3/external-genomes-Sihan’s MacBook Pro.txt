@@ -1,0 +1,4 @@
+name	contigs_db_path
+KMM289	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\ genome\ assembly/2026Mar04_Biolog_Analysis_new_data/Anvio\ KEGG\ analysis/contigs_289.db
+KMM358	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\ genome\ assembly/2026Mar04_Biolog_Analysis_new_data/Anvio\ KEGG\ analysis/contigs_358.db
+KMM366	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\ genome\ assembly/2026Mar04_Biolog_Analysis_new_data/Anvio\ KEGG\ analysis/contigs_366.db

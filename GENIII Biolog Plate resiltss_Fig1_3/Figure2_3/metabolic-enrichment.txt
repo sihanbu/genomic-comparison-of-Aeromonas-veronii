@@ -1,0 +1,113 @@
+MODULE	enrichment_score	unadjusted_p_value	adjusted_q_value	associated_groups	accession	sample_ids	p_ Anadromous	N_ Anadromous	p_ Freshwater	N_ Freshwater
+Ascorbate degradation, ascorbate => D-xylulose-5P	3.000002801333748	0.08326437269349793	1	Freshwater	M00550	KMM289	0	2	1	1
+Semi-phosphorylative Entner-Doudoroff pathway, gluconate => glycerate-3P	3.000002801333748	0.08326437269349793	1	Freshwater	M00308	KMM289	0	2	1	1
+UDP-L-FucNAc biosynthesis, UDP-GlcNAc => UDP-L-FucNAc	3.000002801333748	0.08326437269349793	1	Freshwater	M00923	KMM289	0	2	1	1
+Formaldehyde assimilation, ribulose monophosphate pathway	3.0000028013337467	0.08326437269349815	1	Anadromous	M00345	KMM358,KMM366	1	2	0	1
+GDP-D-Rha4N biosynthesis, Fru-6P => GDP-D-Rha4N	3.0000028013337467	0.08326437269349815	1	Anadromous	M01006	KMM358,KMM366	1	2	0	1
+GDP-L-Fuc biosynthesis, GDP-Man => GDP-L-Fuc	3.0000028013337467	0.08326437269349815	1	Anadromous	M01016	KMM358,KMM366	1	2	0	1
+Sulfate-sulfur assimilation	3.0000028013337467	0.08326437269349815	1	Anadromous	M00616	KMM358,KMM366	1	2	0	1
+ADP-LDmanHep biosynthesis, sedoheptulose-7P => ADP-LDmanHep	0	1	1	NA	M00064	KMM289,KMM358,KMM366	1	2	1	1
+Adenine ribonucleotide biosynthesis, IMP => ADP,ATP	0	1	1	NA	M00049	KMM289,KMM358,KMM366	1	2	1	1
+Adenine ribonucleotide degradation, AMP => Urate	0	1	1	NA	M00958	KMM289,KMM358,KMM366	1	2	1	1
+Arginine biosynthesis, ornithine => arginine	0	1	1	NA	M00844	KMM289,KMM358,KMM366	1	2	1	1
+Arginine succinyltransferase pathway, arginine => glutamate	0	1	1	NA	M00879	KMM289,KMM358,KMM366	1	2	1	1
+Assimilatory sulfate reduction, sulfate => H2S	0	1	1	NA	M00176	KMM289,KMM358,KMM366	1	2	1	1
+Biotin biosynthesis, BioU pathway, pimeloyl-ACP/CoA => biotin	0	1	1	NA	M00950	KMM289,KMM358,KMM366	1	2	1	1
+Biotin biosynthesis, BioW pathway, pimelate => pimeloyl-CoA => biotin	0	1	1	NA	M00577	KMM289,KMM358,KMM366	1	2	1	1
+Biotin biosynthesis, pimeloyl-ACP/CoA => biotin	0	1	1	NA	M00123	KMM289,KMM358,KMM366	1	2	1	1
+C1-unit interconversion, prokaryotes	0	1	1	NA	M00140	KMM289,KMM358,KMM366	1	2	1	1
+C10-C20 isoprenoid biosynthesis, bacteria	0	1	1	NA	M00364	KMM289,KMM358,KMM366	1	2	1	1
+C5 isoprenoid biosynthesis, non-mevalonate pathway	0	1	1	NA	M00096	KMM289,KMM358,KMM366	1	2	1	1
+CMP-KDO biosynthesis, ribulose-5P => CMP-KDO	0	1	1	NA	M00063	KMM289,KMM358,KMM366	1	2	1	1
+Citrate cycle (TCA cycle, Krebs cycle)	0	1	1	NA	M00009	KMM289,KMM358,KMM366	1	2	1	1
+Citrate cycle, first carbon oxidation, oxaloacetate => 2-oxoglutarate	0	1	1	NA	M00010	KMM289,KMM358,KMM366	1	2	1	1
+Citrate cycle, second carbon oxidation, 2-oxoglutarate => oxaloacetate	0	1	1	NA	M00011	KMM289,KMM358,KMM366	1	2	1	1
+Coenzyme A biosynthesis, pantothenate => CoA	0	1	1	NA	M00120	KMM289,KMM358,KMM366	1	2	1	1
+Cysteine biosynthesis, serine => cysteine	0	1	1	NA	M00021	KMM289,KMM358,KMM366	1	2	1	1
+Cytochrome bc1 complex respiratory unit	0	1	1	NA	M00151	KMM289,KMM358,KMM366	1	2	1	1
+Cytochrome bd ubiquinol oxidase	0	1	1	NA	M00153	KMM289,KMM358,KMM366	1	2	1	1
+Cytochrome c oxidase, cbb3-type	0	1	1	NA	M00156	KMM289,KMM358,KMM366	1	2	1	1
+De novo purine biosynthesis, PRPP + glutamine => IMP	0	1	1	NA	M00048	KMM289,KMM358,KMM366	1	2	1	1
+De novo pyrimidine biosynthesis, glutamine (+ PRPP) => UMP	0	1	1	NA	M00051	KMM289,KMM358,KMM366	1	2	1	1
+Deoxyribonucleotide biosynthesis, ADP/GDP/CDP/UDP => dATP/dGTP/dCTP/dUTP	0	1	1	NA	M00053	KMM289,KMM358,KMM366	1	2	1	1
+Dissimilatory nitrate reduction, nitrate => ammonia	0	1	1	NA	M00530	KMM289,KMM358,KMM366	1	2	1	1
+F-type ATPase, prokaryotes and chloroplasts	0	1	1	NA	M00157	KMM289,KMM358,KMM366	1	2	1	1
+Fatty acid biosynthesis, elongation	0	1	1	NA	M00083	KMM289,KMM358,KMM366	1	2	1	1
+Fatty acid biosynthesis, initiation	0	1	1	NA	M00082	KMM289,KMM358,KMM366	1	2	1	1
+Fumarate reductase, prokaryotes	0	1	1	NA	M00150	KMM289,KMM358,KMM366	1	2	1	1
+Galactose degradation, Leloir pathway, galactose => alpha-D-glucose-1P	0	1	1	NA	M00632	KMM289,KMM358,KMM366	1	2	1	1
+Gluconeogenesis, oxaloacetate => fructose-6P	0	1	1	NA	M00003	KMM289,KMM358,KMM366	1	2	1	1
+Glutathione biosynthesis, glutamate => glutathione	0	1	1	NA	M00118	KMM289,KMM358,KMM366	1	2	1	1
+Glycine cleavage system	0	1	1	NA	M00621	KMM289,KMM358,KMM366	1	2	1	1
+Glycogen biosynthesis, glucose-1P => glycogen/starch	0	1	1	NA	M00854	KMM289,KMM358,KMM366	1	2	1	1
+Glycogen degradation, glycogen => glucose-6P	0	1	1	NA	M00855	KMM289,KMM358,KMM366	1	2	1	1
+Glycolysis (Embden-Meyerhof pathway), glucose => pyruvate	0	1	1	NA	M00001	KMM289,KMM358,KMM366	1	2	1	1
+Glycolysis, core module involving three-carbon compounds	0	1	1	NA	M00002	KMM289,KMM358,KMM366	1	2	1	1
+Glyoxylate cycle	0	1	1	NA	M00012	KMM289,KMM358,KMM366	1	2	1	1
+Guanine ribonucleotide biosynthesis, IMP => GDP,GTP	0	1	1	NA	M00050	KMM289,KMM358,KMM366	1	2	1	1
+Guanine ribonucleotide degradation, GMP => Urate	0	1	1	NA	M00959	KMM289,KMM358,KMM366	1	2	1	1
+Heme biosynthesis, animals and fungi, glycine => heme	0	1	1	NA	M00868	KMM289,KMM358,KMM366	1	2	1	1
+Heme biosynthesis, bacteria, glutamyl-tRNA => coproporphyrin III => heme	0	1	1	NA	M00926	KMM289,KMM358,KMM366	1	2	1	1
+Heme biosynthesis, plants and bacteria, glutamate => heme	0	1	1	NA	M00121	KMM289,KMM358,KMM366	1	2	1	1
+Histidine biosynthesis, PRPP => histidine	0	1	1	NA	M00026	KMM289,KMM358,KMM366	1	2	1	1
+Histidine degradation, histidine => N-formiminoglutamate => glutamate	0	1	1	NA	M00045	KMM289,KMM358,KMM366	1	2	1	1
+Isoleucine biosynthesis, threonine => 2-oxobutanoate => isoleucine	0	1	1	NA	M00570	KMM289,KMM358,KMM366	1	2	1	1
+KDO2-lipid A biosynthesis, Raetz pathway, LpxL-LpxM type	0	1	1	NA	M00060	KMM289,KMM358,KMM366	1	2	1	1
+KDO2-lipid A biosynthesis, Raetz pathway, non-LpxL-LpxM type	0	1	1	NA	M00866	KMM289,KMM358,KMM366	1	2	1	1
+Leucine biosynthesis, 2-oxoisovalerate => 2-oxoisocaproate	0	1	1	NA	M00432	KMM289,KMM358,KMM366	1	2	1	1
+Leucine degradation, leucine => acetoacetate + acetyl-CoA	0	1	1	NA	M00036	KMM289,KMM358,KMM366	1	2	1	1
+Lipoic acid biosynthesis, plants and bacteria, octanoyl-ACP => dihydrolipoyl-E2/H	0	1	1	NA	M00881	KMM289,KMM358,KMM366	1	2	1	1
+Lysine biosynthesis, DAP aminotransferase pathway, aspartate => lysine	0	1	1	NA	M00527	KMM289,KMM358,KMM366	1	2	1	1
+Lysine biosynthesis, DAP dehydrogenase pathway, aspartate => lysine	0	1	1	NA	M00526	KMM289,KMM358,KMM366	1	2	1	1
+Lysine biosynthesis, succinyl-DAP pathway, aspartate => lysine	0	1	1	NA	M00016	KMM289,KMM358,KMM366	1	2	1	1
+Menaquinone biosynthesis, chorismate (+ polyprenyl-PP) => menaquinol	0	1	1	NA	M00116	KMM289,KMM358,KMM366	1	2	1	1
+Methionine biosynthesis, aspartate => homoserine => methionine	0	1	1	NA	M00017	KMM289,KMM358,KMM366	1	2	1	1
+Methylcitrate cycle	0	1	1	NA	M00982	KMM289,KMM358,KMM366	1	2	1	1
+Molybdenum cofactor biosynthesis, GTP => molybdenum cofactor	0	1	1	NA	M00880	KMM289,KMM358,KMM366	1	2	1	1
+Multidrug resistance, efflux pump AdeABC	0	1	1	NA	M00649	KMM289,KMM358,KMM366	1	2	1	1
+NAD biosynthesis, aspartate => quinolinate => NAD	0	1	1	NA	M00115	KMM289,KMM358,KMM366	1	2	1	1
+NADH:quinone oxidoreductase, prokaryotes	0	1	1	NA	M00144	KMM289,KMM358,KMM366	1	2	1	1
+Ornithine biosynthesis, glutamate => ornithine	0	1	1	NA	M00028	KMM289,KMM358,KMM366	1	2	1	1
+Ornithine-ammonia cycle	0	1	1	NA	M00978	KMM289,KMM358,KMM366	1	2	1	1
+PRPP biosynthesis, ribose 5P => PRPP	0	1	1	NA	M00005	KMM289,KMM358,KMM366	1	2	1	1
+Pantothenate biosynthesis, valine/L-aspartate => pantothenate	0	1	1	NA	M00119	KMM289,KMM358,KMM366	1	2	1	1
+Pentose phosphate pathway, non-oxidative phase, fructose 6P => ribose 5P	0	1	1	NA	M00007	KMM289,KMM358,KMM366	1	2	1	1
+Phenylalanine biosynthesis, chorismate => phenylpyruvate => phenylalanine	0	1	1	NA	M00024	KMM289,KMM358,KMM366	1	2	1	1
+Phosphate acetyltransferase-acetate kinase pathway, acetyl-CoA => acetate	0	1	1	NA	M00579	KMM289,KMM358,KMM366	1	2	1	1
+Phosphatidylethanolamine (PE) biosynthesis, PA => PS => PE	0	1	1	NA	M00093	KMM289,KMM358,KMM366	1	2	1	1
+Pimeloyl-ACP biosynthesis, BioC-BioH pathway, malonyl-ACP => pimeloyl-ACP	0	1	1	NA	M00572	KMM289,KMM358,KMM366	1	2	1	1
+PreQ1 biosynthesis, GTP => 7-Aminomethyl-7-deazaguanine	0	1	1	NA	M00988	KMM289,KMM358,KMM366	1	2	1	1
+Proline biosynthesis, glutamate => proline	0	1	1	NA	M00015	KMM289,KMM358,KMM366	1	2	1	1
+Proline degradation, proline => glutamate	0	1	1	NA	M00970	KMM289,KMM358,KMM366	1	2	1	1
+Pyridoxal-P biosynthesis, erythrose-4P => pyridoxal-P	0	1	1	NA	M00124	KMM289,KMM358,KMM366	1	2	1	1
+Pyrimidine deoxyribonucleotide biosynthesis, UDP => dTTP	0	1	1	NA	M00938	KMM289,KMM358,KMM366	1	2	1	1
+Pyrimidine ribonucleotide biosynthesis, UMP => UDP/UTP,CDP/CTP	0	1	1	NA	M00052	KMM289,KMM358,KMM366	1	2	1	1
+Pyruvate oxidation, pyruvate => acetyl-CoA	0	1	1	NA	M00307	KMM289,KMM358,KMM366	1	2	1	1
+Reductive pentose phosphate cycle (Calvin cycle)	0	1	1	NA	M00165	KMM289,KMM358,KMM366	1	2	1	1
+Riboflavin biosynthesis, plants and bacteria, GTP => riboflavin/FMN/FAD	0	1	1	NA	M00125	KMM289,KMM358,KMM366	1	2	1	1
+Serine biosynthesis, glycerate-3P => serine	0	1	1	NA	M00020	KMM289,KMM358,KMM366	1	2	1	1
+Shikimate pathway, phosphoenolpyruvate + erythrose-4P => chorismate	0	1	1	NA	M00022	KMM289,KMM358,KMM366	1	2	1	1
+Siroheme biosynthesis, glutamyl-tRNA => siroheme	0	1	1	NA	M00846	KMM289,KMM358,KMM366	1	2	1	1
+Succinate dehydrogenase, prokaryotes	0	1	1	NA	M00149	KMM289,KMM358,KMM366	1	2	1	1
+Sulfur reduction, sulfur => sulfide	0	1	1	NA	M00986	KMM289,KMM358,KMM366	1	2	1	1
+Tetrahydrofolate biosynthesis, GTP => THF	0	1	1	NA	M00126	KMM289,KMM358,KMM366	1	2	1	1
+Thiamine biosynthesis, prokaryotes, AIR (+ DXP/tyrosine) => TMP/TPP	0	1	1	NA	M00127	KMM289,KMM358,KMM366	1	2	1	1
+Threonine biosynthesis, aspartate => homoserine => threonine	0	1	1	NA	M00018	KMM289,KMM358,KMM366	1	2	1	1
+Tryptophan biosynthesis, chorismate => tryptophan	0	1	1	NA	M00023	KMM289,KMM358,KMM366	1	2	1	1
+Tyrosine biosynthesis, chorismate => HPP => tyrosine	0	1	1	NA	M00025	KMM289,KMM358,KMM366	1	2	1	1
+Tyrosine degradation, tyrosine => homogentisate	0	1	1	NA	M00044	KMM289,KMM358,KMM366	1	2	1	1
+UDP-Gal biosynthesis, Gal => UDP-Gal	0	1	1	NA	M00554	KMM289,KMM358,KMM366	1	2	1	1
+UDP-Galf biosynthesis, UDP-Glc => UDP-Galf	0	1	1	NA	M01004	KMM289,KMM358,KMM366	1	2	1	1
+UDP-Glc biosynthesis, Glc => UDP-Glc	0	1	1	NA	M00549	KMM289,KMM358,KMM366	1	2	1	1
+UDP-GlcA/GalA biosynthesis, UDP-Glc => UDP-GlcA => UDP-GalA	0	1	1	NA	M00999	KMM289,KMM358,KMM366	1	2	1	1
+UDP-GlcNAc biosynthesis, prokaryotes, Fru-6P => UDP-GlcNAc	0	1	1	NA	M00909	KMM289,KMM358,KMM366	1	2	1	1
+UDP-MurNAc biosynthesis, Fru-6P => UDP-MurNAc	0	1	1	NA	M00995	KMM289,KMM358,KMM366	1	2	1	1
+UDP-MurNAc biosynthesis, anhMurNAc => UDP-MurNAc	0	1	1	NA	M00996	KMM289,KMM358,KMM366	1	2	1	1
+UDP-QuiNAc biosynthesis, UDP-GlcNAc => UDP-QuiNAc	0	1	1	NA	M01009	KMM289,KMM358,KMM366	1	2	1	1
+Ubiquinone biosynthesis, O2-independent, prokaryotes, chorismate (+ polyprenyl-PP) => ubiquinol	0	1	1	NA	M00989	KMM289,KMM358,KMM366	1	2	1	1
+Ubiquinone biosynthesis, prokaryotes, chorismate (+ polyprenyl-PP) => ubiquinol	0	1	1	NA	M00117	KMM289,KMM358,KMM366	1	2	1	1
+Valine/isoleucine biosynthesis, pyruvate => valine / 2-oxobutanoate => isoleucine	0	1	1	NA	M00019	KMM289,KMM358,KMM366	1	2	1	1
+beta-Oxidation	0	1	1	NA	M00087	KMM289,KMM358,KMM366	1	2	1	1
+beta-Oxidation, acyl-CoA synthesis	0	1	1	NA	M00086	KMM289,KMM358,KMM366	1	2	1	1
+dTDP-6-deoxy-L-Tal biosynthesis, Glc-1P => dTDP-6-deoxy-L-Tal	0	1	1	NA	M01022	KMM289,KMM358,KMM366	1	2	1	1
+dTDP-L-Rha biosynthesis, Glc-1P => dTDP-L-Rha	0	1	1	NA	M00793	KMM289,KMM358,KMM366	1	2	1	1

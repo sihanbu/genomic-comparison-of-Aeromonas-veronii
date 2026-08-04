@@ -1,0 +1,25 @@
+name	Host
+KMM289	Threespine stickleback
+KMM358	Threespine stickleback
+KMM366	Threespine stickleback
+Hv98_241	Leech
+Ho04_635	Leech
+Hv98_232	Leech
+Hv98_231	Leech
+Hv98_225	Leech
+Hv98_571	Leech
+Hm21	Leech
+Hm22	Leech
+b1_3	Other fish
+ZfB1	Other fish
+AV040	Other fish
+C4	Other fish
+D3	Other fish
+AV0110	Other fish
+FC951	Human
+FDAARGOS_632	Human
+AV1708_29120	Human
+ANYA_14430	Human
+ANYA_13997	Human
+ANYA_18196	Human
+AV183026	Human

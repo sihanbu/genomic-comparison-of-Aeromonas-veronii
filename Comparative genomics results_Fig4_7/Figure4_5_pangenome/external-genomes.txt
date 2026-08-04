@@ -1,0 +1,25 @@
+name	contigs_db_path
+KMM289	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/KMM289-contigs.db
+KMM358	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/KMM358-contigs.db
+KMM366	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/KMM366-contigs.db
+AV1708_29120	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/1708-29120-contigs.db
+AV183026	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/183026-contigs.db
+ANYA_13997	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/ANYA_13997-contigs.db
+ANYA_14430	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/ANYA_14430-contigs.db
+ANYA_18196	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/ANYA_18196-contigs.db
+AV0110	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/AV0110-contigs.db
+AV040	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/AV040-contigs.db
+b1_3	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/b1-3-contigs.db
+C4	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/C4-contigs.db
+D3	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/D3-contigs.db
+FC951	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/FC951-contigs.db
+FDAARGOS_632	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/FDAARGOS_632-contigs.db
+Hm21	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/Hm21-contigs.db
+Hm22	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/Hm22-contigs.db
+Ho04_635	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/Ho04-635-contigs.db
+Hv98_225	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/Hv98-225-contigs.db
+Hv98_231	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/Hv98-231-contigs.db
+Hv98_232	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/Hv98-232-contigs.db
+Hv98_241	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/Hv98-241-contigs.db
+Hv98_571	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/Hv98-571-contigs.db
+ZfB1	/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole genome assembly/2026Mar04_Biolog_Analysis_new_data/selected genomes comparision/ZfB1-contigs.db

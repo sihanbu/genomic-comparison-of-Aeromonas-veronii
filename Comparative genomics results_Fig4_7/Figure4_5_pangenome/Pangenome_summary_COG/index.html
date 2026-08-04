@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Anvi'o">
+    <base target="_blank">
+
+    <title>Anvi'o: All-GENOMES COG</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href=".html/css/bootstrap.css" rel="stylesheet">
+
+    <link href=".html/css/sortable.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href=".html/css/anvio.css" rel="stylesheet">
+
+    <!-- Bootstrap Icon CSS -->
+    <link href=".html/css/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark" role="navigation">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="width: 50px;">        
+                <img class="img-fluid img-left"src=".html/pics/logo-simple.png" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse align-items-center justify-content-center" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item ml-5 mr-5">
+                            <a class="text-secondary" href="http://anvio.org">Anvi'o Project Page</a>
+                        </li>
+                        <li class="nav-item mr-5">
+                            <a class="text-secondary" href="https://github.com/merenlab/anvio">Anvi'o Repository</a>
+                        </li>
+                        <li class="nav-item mr-5">
+                            <a class="text-secondary" href="https://github.com/merenlab/anvio/issues">Report an Issue</a>
+                        </li>
+                        <li class="nav-item mr-5">
+                            <a class="text-secondary" href="http://anvio.org/#people">Contact</a>
+                        </li>
+                        <li class="nav-item mr-5">
+                            <a class="text-secondary" href="https://github.com/merenlab/anvio/releases">Anvi'o version: 9-dev</a>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+            <!-- /.navbar-collapse -->
+    </nav>
+
+    <div class="container mt-5 pt-5">
+        <div class="alert alert-primary d-flex mt-3" role="alert">
+            <i class="d-flex align-items-center mr-3 text-primary bi bi-info-circle" style="font-size: 3em;"></i>
+            <div class="text-secondary">
+                The <b class="text-primary">None</b> gene cluster 'bins' that were sotred in the anvi'o pan database for '<b class="text-primary">All-GENOMES COG</b>'
+                under the collection name "<b class="text-primary"></b>", describe <b class="text-primary">8,496</b>
+                gene clusters with <b class="text-primary">103,451</b> genes that were identified in <b class="text-primary">24</b> genomes.
+            </div>
+        </div>
+    </div>
+
+
+    <section>
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title"><a data-toggle="collapse" data-parent="#basics_panel" href="#collapse-basics">Basics</a></h1>
+                </div>
+
+                <div id="collapse-basics" class="show collapse in">
+                    <div class="card-body text-secondary">
+                        Here are some of the details about the pan database, and genomes storage.
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="card" style="margin-left:10px;">
+                                <div class="card-header">
+                                    Pan DB for <b>All-GENOMES COG</b> w/ 24 samples.
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead id="tblHead_basics_profile">
+                                            <tr>
+                                                <th>Key</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr>
+                                                <td>Created on</td>
+                                                <td>2026-08-03 10:52:24</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Version</td>
+                                                <td>21</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Number of genes</td>
+                                                <td>103,451</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Number of gene clusters</td>
+                                                <td>8,496</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Partial genes excluded</td>
+                                                <td>No</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Minbit parameter</td>
+                                                <td>0.5</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Gene cluster min occurrence parameter</td>
+                                                <td>1</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>MCL inflation parameter</td>
+                                                <td>2.0</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>NCBI blastp or DIAMOND?</td>
+                                                <td>DIAMOND</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Additional parameters for sequence search</td>
+                                                <td>--masking 0</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Number of genomes used</td>
+                                                <td>24</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Items aditional data keys</td>
+                                                <td>num_genomes_gene_cluster_has_hits, num_genes_in_gene_cluster, max_num_paralogs, SCG, AAI_min, AAI_max, AAI_avg, functional_homogeneity_index, geometric_homogeneity_index, combined_homogeneity_index</td>
+                                            </tr>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="card" style="margin-right:10px;">
+                                <div class="card-header">
+                                    Genomes storage
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead id="tblHead_basics_contigs">
+                                            <tr>
+                                                <th>Key</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr>
+                                                <td>Created on</td>
+                                                <td>Storage DB knows nothing :(</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Version</td>
+                                                <td>8</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Number of genomes described</td>
+                                                <td>24</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Functional annotation</td>
+                                                <td>Available</td>
+                                            </tr>
+                                        
+                                            <tr>
+                                                <td>Functional annotation sources</td>
+                                                <td>COG24_PATHWAY, COG24_CATEGORY, COG24_FUNCTION</td>
+                                            </tr>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-body rounded bg-light" style="margin: 10px;">These are the list of genomes used in this pan database: ANYA_13997, ANYA_14430, ANYA_18196, AV0110, AV040, AV1708_29120, AV183026, C4, D3, FC951, FDAARGOS_632, Hm21, Hm22, Ho04_635, Hv98_225, Hv98_231, Hv98_232, Hv98_241, Hv98_571, KMM289, KMM358, KMM366, ZfB1, b1_3</div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container mt-3">
+            <div class="card border-info" id="bins_panel">
+                <div class="card-header">
+                    <h1 class="card-title">Summary files for gene clusters</h1>
+                </div>
+
+                <div id="collapse-bins" class="panel">
+                    <div class="card-body">
+                        
+                        <p style="color: #AAAAAA; padding-top: 20px; padding-left:20px;">This was a full summary (i.e., the `--quick` flag has not been used), hence the gene clusters summary file is not succint by any means.</p>
+                        
+
+                        <p style="color: #777777; padding-top: 20px; padding-left:20px;">The summary file: <a href="All-GENOMES_COG_gene_clusters_summary.txt.gz">All-GENOMES_COG_gene_clusters_summary.txt.gz</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- MISC DATA PANEL -->
+    <section>
+        <div class="container mt-3">
+            <div class="card border-info" id="misc_data_panel">
+                <div class="card-header">
+                    <h1 class="card-title">Misc Data</h1>
+                </div>
+
+                <div class="card-body">
+                    <p style="color: #222222; padding-left: 10px; padding-top: 10px; font-size: larger;"><b>For layers</b></p>
+                    
+                    <p style="color: #222222; padding-left: 20px;">The directory <a href="misc_data_layers/">misc data layers</a> contains TAB-delimited files for additional data stored under the following data group names for each <b>sample/layer</b> found in the merged database: default.</p>
+                    
+                    <p style="color: #222222; padding-left: 20px;">The <b>default</b> data group, which often is added by anvi'o automatically and contains important information, contained these keys: <b>total_length</b>, <b>gc_content</b>, <b>percent_completion</b>, <b>percent_redundancy</b>, <b>num_genes</b>, <b>avg_gene_length</b>, <b>num_genes_per_kb</b>, <b>singleton_gene_clusters</b>, <b>num_gene_clusters</b>.</p>
+                    
+                    
+
+                    <p style="color: #222222; padding-left: 10px; padding-top: 10px; font-size: larger;"><b>For items</b></p>
+                    
+                    <p style="color: #222222; padding-left: 20px;">The directory <a href="misc_data_items/">misc data items</a> contains TAB-delimited files for additional data stored under the following data group names for each <b>item</b> found in the merged database: default.</p>
+                    
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div style="margin-bottom:200px"></div>
+
+    <!-- jQuery -->
+    <script src=".html/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src=".html/js/popper.min.js"></script>
+    
+    <!-- Bootstrap Core JavaScript -->
+    <script src=".html/js/bootstrap.min.js"></script>
+
+    <!-- Table sorter -->
+    <script src=".html/js/sortable.min.js"></script>
+
+    <!-- Activate tooltips... -->
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    });
+</script>
+</body>
+</html>

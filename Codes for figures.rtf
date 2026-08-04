@@ -1,0 +1,1034 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww20660\viewh18980\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 Figure 1. Biolog  |  KEGG mapping to biolog\
+
+\f1\b0 ###########################################################\
+########   Run3: AUC statistics, 72h  #####################\
+###########################################################\
+\
+run3_biolog_org<-read.csv("Run3_Feature_Table.csv",check.names = FALSE,fileEncoding = "UTF-8")\
+\
+run3_biolog<-run3_biolog_org[,-1]\
+run3_biolog<-column_to_rownames(run3_biolog, var="SUBSTRATE")\
+run3_biolog<-t(run3_biolog)\
+\
+run3_biolog<-as.data.frame(run3_biolog)\
+run3_biolog<-rownames_to_column(run3_biolog, var="SampleID")\
+\
+#Add 3 columns: strain, replicate, timepoint\
+run3_biolog <- run3_biolog %>%\
+  mutate(\
+    Strain     = str_sub(SampleID, 1, 3),\
+    Replicate  = str_extract(SampleID, "P\\\\d+") |> str_remove("P") |> as.integer(),\
+    Timepoint  = str_extract(SampleID, "\\\\d+$") |> as.integer()\
+  ) %>%\
+  select(Strain, Replicate, Timepoint, everything())\
+\
+run3_biolog_72<- run3_biolog %>%\
+  mutate(Strain = paste0("KMM", Strain)) %>%\
+  filter(Timepoint != 96 & Timepoint != 120)\
+\
+\
+#calculate AUC per replicate across time points, per substrate (columns)\
+run3_biolog_AUC_72 <-run3_biolog_72 %>%\
+  pivot_longer(\
+    cols = -c(Strain, Replicate, Timepoint, SampleID),\
+    names_to = "Substrate",\
+    values_to = "OD"\
+  ) %>%\
+  group_by(Strain, Replicate, Substrate) %>%\
+  arrange(Timepoint, .by_group = TRUE) %>%\
+  summarise(AUC = auc(Timepoint, OD), .groups = "drop")\
+\
+\
+#stats on comparing 3 strains using one way ANOVA\
+#overall p-values\
+summary(run3_biolog_AUC_72)\
+run3_biolog_AUC_72$Strain<-as.factor(run3_biolog_AUC_72$Strain)\
+run3_biolog_AUC_72$Replicate<-as.factor(run3_biolog_AUC_72$Replicate)\
+run3_biolog_AUC_72$Substrate<-as.factor(run3_biolog_AUC_72$Substrate)\
+\
+Run3_anova_AUC_72<- run3_biolog_AUC_72 %>%\
+  group_by(Substrate) %>%\
+  anova_test(AUC ~ Strain)  %>%\
+  as.data.frame() %>%\
+  mutate(p_adj = p.adjust(p, method = "BH"))\
+\
+Run3_anova_AUC_72_sig<- Run3_anova_AUC_72 %>%\
+  as.data.frame() %>%\
+  filter(p_adj < 0.05)\
+\
+#pairwise comparsion \
+Run3_tukey_pairwise_72 <- run3_biolog_AUC_72 %>%\
+  group_by(Substrate) %>%\
+  tukey_hsd(AUC ~ Strain)  \
+\
+#subset the significant ones from pairwise comparsion \
+sig_sub_72 <- Run3_tukey_pairwise_72 %>%\
+  filter(p.adj < 0.05) %>%\
+  pull(Substrate) %>%\
+  unique()\
+\
+Run3_sig_all_72 <- Run3_tukey_pairwise_72 %>%\
+  filter(Substrate %in% sig_sub_72)\
+\
+\
+\
+###########################################################\
+########   Run2: AUC statistics, 72h  #####################\
+###########################################################\
+\
+run2_biolog_org<-read.csv("Run2_Feature_Table.csv",check.names = FALSE,fileEncoding = "UTF-8")\
+\
+run2_biolog<-run2_biolog_org[,-1]\
+run2_biolog<-column_to_rownames(run2_biolog, var="SUBSTRATE")\
+run2_biolog<-t(run2_biolog)\
+\
+run2_biolog<-as.data.frame(run2_biolog)\
+run2_biolog<-rownames_to_column(run2_biolog, var="SampleID")\
+\
+#Add 3 columns: strain, replicate, timepoint\
+run2_biolog <- run2_biolog %>%\
+  mutate(\
+    Strain     = str_sub(SampleID, 1, 3),\
+    Replicate  = str_extract(SampleID, "P\\\\d+") |> str_remove("P") |> as.integer(),\
+    Timepoint  = str_extract(SampleID, "\\\\d+$") |> as.integer()\
+  ) %>%\
+  select(Strain, Replicate, Timepoint, everything())\
+\
+run2_biolog_72<- run2_biolog %>%\
+  mutate(Strain = paste0("KMM", Strain)) %>%\
+  filter(Timepoint != 96 & Timepoint != 120)\
+\
+\
+#calculate AUC per replicate across time points, per substrate (columns)\
+run2_biolog_AUC_72 <-run2_biolog_72 %>%\
+  pivot_longer(\
+    cols = -c(Strain, Replicate, Timepoint, SampleID),\
+    names_to = "Substrate",\
+    values_to = "OD"\
+  ) %>%\
+  group_by(Strain, Replicate, Substrate) %>%\
+  arrange(Timepoint, .by_group = TRUE) %>%\
+  summarise(AUC = auc(Timepoint, OD), .groups = "drop")\
+\
+\
+#stats on comparing 3 strains using one way ANOVA\
+#overall p-values\
+summary(run2_biolog_AUC_72)\
+run2_biolog_AUC_72$Strain<-as.factor(run2_biolog_AUC_72$Strain)\
+run2_biolog_AUC_72$Replicate<-as.factor(run2_biolog_AUC_72$Replicate)\
+run2_biolog_AUC_72$Substrate<-as.factor(run2_biolog_AUC_72$Substrate)\
+\
+Run2_anova_AUC_72<- run2_biolog_AUC_72 %>%\
+  group_by(Substrate) %>%\
+  anova_test(AUC ~ Strain)  %>%\
+  as.data.frame() %>%\
+  mutate(p_adj = p.adjust(p, method = "BH"))\
+\
+Run2_anova_AUC_72_sig<- Run2_anova_AUC_72 %>%\
+  as.data.frame() %>%\
+  filter(p_adj < 0.05)\
+\
+#pairwise comparsion \
+Run2_tukey_pairwise_72 <- run2_biolog_AUC_72 %>%\
+  group_by(Substrate) %>%\
+  tukey_hsd(AUC ~ Strain)  \
+\
+#subset the significant ones from pairwise comparsion \
+sig_sub_72 <- Run2_tukey_pairwise_72 %>%\
+  filter(p.adj < 0.05) %>%\
+  pull(Substrate) %>%\
+  unique()\
+\
+Run2_sig_all_72 <- Run2_tukey_pairwise_72 %>%\
+  filter(Substrate %in% sig_sub_72)\
+\
+\
+##############################################\
+########   Run4: AUC statistics, 72h ############# \
+##############################################\
+run4_biolog_org<-read.csv("Run4_Feature_Table.csv",check.names = FALSE,fileEncoding = "UTF-8")\
+\
+run4_biolog<-run4_biolog_org[,-1]\
+run4_biolog<-column_to_rownames(run4_biolog, var="SUBSTRATE")\
+run4_biolog<-t(run4_biolog)\
+\
+run4_biolog<-as.data.frame(run4_biolog)\
+run4_biolog<-rownames_to_column(run4_biolog, var="SampleID")\
+\
+#Add 3 columns: strain, replicate, timepoint\
+run4_biolog <- run4_biolog %>%\
+  mutate(\
+    Strain     = str_sub(SampleID, 1, 3),\
+    Replicate  = str_extract(SampleID, "P\\\\d+") |> str_remove("P") |> as.integer(),\
+    Timepoint  = str_extract(SampleID, "\\\\d+$") |> as.integer()\
+  ) %>%\
+  select(Strain, Replicate, Timepoint, everything())\
+\
+run4_biolog_72<- run4_biolog %>%\
+  mutate(Strain = paste0("KMM", Strain)) %>%\
+  filter(Timepoint != 96 & Timepoint != 120)\
+\
+\
+\
+#calculate AUC per replicate across time points, per substrate (columns)\
+run4_biolog_72_AUC <-run4_biolog_72  %>%\
+  pivot_longer(\
+    cols = -c(Strain, Replicate, Timepoint, SampleID),\
+    names_to = "Substrate",\
+    values_to = "OD"\
+  ) %>%\
+  group_by(Strain, Replicate, Substrate) %>%\
+  arrange(Timepoint, .by_group = TRUE) %>%\
+  summarise(AUC = auc(Timepoint, OD), .groups = "drop")\
+\
+#stats on comparing 3 strains using one way ANOVA\
+#overall p-values\
+summary(run4_biolog_72_AUC)\
+run4_biolog_72_AUC$Strain<-as.factor(run4_biolog_72_AUC$Strain)\
+run4_biolog_72_AUC$Replicate<-as.factor(run4_biolog_72_AUC$Replicate)\
+run4_biolog_72_AUC$Substrate<-as.factor(run4_biolog_72_AUC$Substrate)\
+\
+Run4_anova_AUC<- run4_biolog_72_AUC %>%\
+  group_by(Substrate) %>%\
+  anova_test(AUC ~ Strain)  %>%\
+  as.data.frame() %>%\
+  mutate(p_adj = p.adjust(p, method = "BH"))\
+\
+Run4_anova_AUC_sig<- Run4_anova_AUC %>%\
+  as.data.frame() %>%\
+  filter(p_adj < 0.05)\
+\
+#pairwise comparsion \
+Run4_tukey_pairwise <- run4_biolog_72_AUC %>%\
+  group_by(Substrate) %>%\
+  tukey_hsd(AUC ~ Strain)  \
+\
+\
+#subset the significant ones from pairwise comparsion \
+sig_sub <- Run4_tukey_pairwise %>%\
+  filter(p.adj < 0.05) %>%\
+  pull(Substrate) %>%\
+  unique()\
+\
+Run4_sig_all <- Run4_tukey_pairwise %>%\
+  filter(Substrate %in% sig_sub)\
+\
+\
+######################################################################\
+########  Find consistent substrates in 3 tukey results  ############# \
+######################################################################\
+\
+consistent_substrate_72 <- Reduce(\
+  intersect,\
+  list( unique(Run2_sig_all_72$Substrate),\
+    unique(Run3_sig_all_72$Substrate),\
+    unique(Run4_sig_all$Substrate)))\
+\
+Run4_consistent_72 <- Run4_sig_all %>%\
+  filter(Substrate %in% consistent_substrate_72)\
+\
+\
+#get the grouping info\
+grouping<-read.csv("tabula-Origanum heracleoticum paper_STable1_GENIII_grouping_KEGG.csv", header = T,fileEncoding = "UTF-8")\
+\
+\
+#avergae the AUC for heatmap \
+auc_mean <- run4_biolog_72_AUC %>%\
+  group_by(Strain, Substrate) %>%\
+  summarise(mean_AUC = mean(AUC))\
+\
+\
+auc_heatmap<-Run4_consistent_72  %>%\
+  left_join(\
+    auc_mean %>%\
+      select(Substrate, Strain, mean_AUC) %>%\
+      rename(group1 = Strain, mean_AUC_group1 = mean_AUC),\
+    by = c("Substrate", "group1")) %>%\
+  left_join(\
+    auc_mean %>%\
+      select(Substrate, Strain, mean_AUC) %>%\
+      rename(group2 = Strain, mean_AUC_group2 = mean_AUC),\
+    by = c("Substrate", "group2")) %>%\
+  mutate(diff_meanAUC = mean_AUC_group1 - mean_AUC_group2) %>%\
+  mutate(compare = paste(group1, group2, sep = "-"))  %>%\
+  mutate(sign.mark = ifelse(p.adj.signif == "ns", "", p.adj.signif))\
+\
+auc_heatmap<-left_join(auc_heatmap, grouping, by="Substrate")\
+summary(auc_heatmap)\
+\
+auc_heatmap$compare<-as.factor(auc_heatmap$compare)\
+auc_heatmap$Group<-as.factor(auc_heatmap$Group)\
+auc_heatmap$Substrate<-as.factor(auc_heatmap$Substrate)\
+auc_heatmap$diff_meanAUC <-as.numeric(auc_heatmap$ diff_meanAUC)\
+auc_heatmap$Updated_Carbon_subgroup<-as.factor(auc_heatmap$Updated_Carbon_subgroup)\
+\
+\
+#visualize\
+heatmap <- ggplot(auc_heatmap, aes(compare, Substrate)) +\
+  geom_tile(aes(fill = diff_meanAUC)) +\
+  geom_text(aes(label = sign.mark), color = "black", vjust = 0.75, size = 6) +\
+  scale_fill_gradientn(colours = rev(brewer.pal(11, "RdYlBu")), name = "\uc0\u916 AUC") +\
+  scale_x_discrete(expand = c(0, 0)) +\
+  scale_y_discrete(expand = c(0, 0))+\
+  ggh4x::facet_nested(\
+    Group + Updated_Carbon_subgroup ~ .,\
+    scales = "free_y",\
+    space  = "free_y",\
+    switch = "y",\
+    strip = ggh4x::strip_nested(\
+      text_y = ggh4x::elem_list_text(\
+        element_text(face = "bold", size = 10),  # outer strip (Group)\
+        element_text(face = "bold", size = 10)   # inner strip (grey boxes)\
+      ),\
+      background_y = ggh4x::elem_list_rect(\
+        fill  = c("white", "grey85"),   # outer Group = white; inner subgroup = grey\
+        color = c("white", "grey60")),by_layer_y = TRUE)) +\
+  theme_bw() +\
+  theme(axis.title = element_blank(),  \
+        axis.text.x = element_text(size = 10,face = "bold"),  \
+        axis.text.y = element_text(size = 10,face = "bold"),   \
+        legend.title = element_text(size = 10,face = "bold"),   \
+        legend.text = element_text(size = 10,face = "bold"),   \
+        legend.key.width = unit(0.3, "cm"),       \
+        legend.key.height = unit(0.4, "cm"),     \
+        strip.background.y = element_rect(color="white", fill = "white"),  \
+        strip.placement = "outside",   \
+        strip.switch.pad.grid = unit(1, "cm"),\
+        strip.text.x = element_text(size = 9,face = "bold"),   \
+        strip.text.y.left = element_text(size = 9, angle = 90, hjust = 0.5,face = "bold"),  \
+        panel.grid = element_blank(),\
+        panel.border = element_rect(color = "black", linewidth = 1),\
+        axis.ticks = element_line(linewidth = 0.6),\
+        plot.margin = margin(0.5, 0.5, 0.5, 0.5, 'cm'))\
+\
+\
+heatmap\
+\
+ggsave(filename = "Consistent_Sig_Pairwise_heatmap_use_Run4AUC.png",\
+       plot = heatmap,\
+       width = 8, height = 6,\
+       dpi =800,\
+       device = "png")\
+\
+\
+\
+################################\
+###### Growth curve  ########\
+\
+regroup<-data.frame(Substrate = c(\
+  "Sucrose",\
+  "N-Acetyl-D-Galactosamine",\
+  "N-Acetyl-\uc0\u946 -D-Mannosamine"  ,\
+  "D-Mannose"  ,\
+  "D-Fructose-6-PO4"   ,\
+  "D-Fructose" ,\
+  "Propionic Acid",\
+  "p-Hydroxy-Phenylacetic Acid" , \
+  "Formic Acid",\
+  "Tetrazolium Blue" ,\
+  "Rifamycin SV",\
+  "Niaproof 4" ),\
+  relabel_group = c( "Carbon source | Carbohydrate",\
+                     "Carbon source | Carbohydrate",\
+                     "Carbon source | Carbohydrate",\
+                     "Carbon source | Carbohydrate",\
+                     "Carbon source | Carbohydrate",\
+                     "Carbon source | Carbohydrate",\
+                    "Carbon source | Carboxylic acid",\
+                    "Carbon source | Carboxylic acid",\
+                    "Carbon source | Carboxylic acid",\
+                    "Chemical sensitivity",\
+                    "Chemical sensitivity",\
+                    "Chemical sensitivity")) \
+\
+order<-c(\
+  "Sucrose",\
+  "N-Acetyl-D-Galactosamine",\
+  "N-Acetyl-\uc0\u946 -D-Mannosamine"  ,\
+  "D-Mannose"  ,\
+  "D-Fructose-6-PO4"   ,\
+  "D-Fructose" ,\
+  "Propionic Acid",\
+  "p-Hydroxy-Phenylacetic Acid" , \
+  "Formic Acid",\
+  "Tetrazolium Blue" ,\
+  "Rifamycin SV",\
+  "Niaproof 4" )\
+  \
+  \
+run4_biolog_filtered <- run4_biolog %>%\
+  select(1:3, any_of(consistent_substrate_72))\
+\
+run4_biolog_filtered <- filter(run4_biolog_filtered, Timepoint != 96 &Timepoint != 120 )\
+\
+ \
+long_df <- run4_biolog_filtered %>%\
+  pivot_longer(cols = 4:ncol(.),names_to = "Substrate",values_to = "Value")\
+\
+long_df <-left_join(long_df, regroup, by = "Substrate")\
+\
+\
+long_df$relabel_group<-as.factor(long_df$relabel_group)\
+long_df$Timepoint<-as.factor(long_df$Timepoint)\
+\
+long_df <- long_df%>%\
+  mutate(Strain = paste0("KMM", Strain)) %>%\
+  mutate(Substrate = factor(Substrate, levels = order))\
+ \
+\
+growth_curve<-ggplot(long_df, aes(x = Timepoint, y = Value, color = Strain)) +\
+  stat_summary(aes(group = Strain), \
+               geom = "errorbar",fun.data = mean_se, width = 0.4, size = 0.6) +\
+  stat_summary(aes(group = Strain),geom = "line", fun = mean, linewidth = 1) +\
+  stat_summary(aes(fill = Strain), geom = "point", \
+               fun = mean, size = 2, shape = 21, stroke = 0.8)+\
+  facet_wrap(~ relabel_group+Substrate, scales = "free_y") +\
+  labs(x = "Incubation time (h)", y = "Corrected OD value") +\
+  theme_bw() +\
+  theme(\
+    strip.text = element_text(face = "bold"),\
+    panel.grid = element_blank(),\
+    legend.title = element_blank(),\
+    strip.placement = "outside",\
+    legend.position = "bottom" ,\
+    strip.text.x = element_text(face = "bold", size = 9),  # Substrate\
+    strip.text.y = element_text(face = "bold", size = 9),   # relabel_group\
+    strip.background.y = element_rect(fill = "grey90", color = NA),\
+    axis.title.y = element_text(margin = margin(r = 6)))\
+\
+\
+ \
+combined_plot <- ( heatmap+growth_curve ) +\
+  plot_layout(widths = c( 2,4.8)) +\
+  plot_annotation(tag_levels = "A") &\
+  theme(\
+    plot.tag = element_text(size = 20, face = "bold"))\
+\
+ggsave("Run4_Combined_Figure.png",\
+       combined_plot,\
+       width = 18, height = 9,\
+       dpi = 500)\
+\
+\
+\
+\
+#######################################################\
+########### KEGG results map to biolog  #######\
+############################################\
+\
+\
+#find the compound names of the significant taxa \
+#download KEGG module and co database \
+co_module_full<-read.table("https://rest.kegg.jp/link/compound/module", quote="", sep="\\t")\
+colnames(co_module_full)<- c("Module","Compound")\
+co_module_full$Compound <- sub("cpd:", "", co_module_full$Compound)\
+co_module_full$Module     <- sub("md:", "", co_module_full$Module)\
+\
+grouping<-read.csv("tabula-Origanum heracleoticum paper_STable1_GENIII_grouping_KEGG.csv", header = T,fileEncoding = "UTF-8")\
+\
+co_mo_biolog<-merge(grouping, co_module_full, by.x = "KEGG", by.y = "Compound")   \
+\
+compound_modules <- co_mo_biolog %>%\
+  group_by(KEGG) %>%\
+  summarise(\
+    Modules = paste(unique(Module), collapse = ", "))\
+\
+#Supplementary table3\
+merge<-full_join(grouping, compound_modules, by="KEGG")\
+write.csv(merge, "tabula-Origanum heracleoticum paper_STable1_GENIII_grouping_KEGG_Module.csv", row.names = F)\
+\
+##################\
+#pick significant taxa \
+######################\
+\
+target_substrates <- c(\
+  "Sucrose",\
+  "N-Acetyl-D-Galactosamine",\
+  "N-Acetyl-\uc0\u946 -D-Mannosamine"  ,\
+  "D-Mannose"  ,\
+  "D-Fructose-6-PO4"   ,\
+  "D-Fructose" ,\
+  "Propionic Acid",\
+  "p-Hydroxy-Phenylacetic Acid" , \
+  "Formic Acid",\
+  "Tetrazolium Blue" ,\
+  "Rifamycin SV",\
+  "Niaproof 4" )\
+\
+picked <- merge %>%\
+  dplyr::filter(Substrate %in% target_substrates)\
+\
+\
+anvio_kegg_module <- read.table(\
+  "/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\\ genome\\ assembly/2026Mar04_Biolog_Analysis_new_data/Anvio\\ KEGG\\ analysis/289_358_366_metabolism_modules_custom_in\\ supp\\ table1.txt",\
+  header = TRUE,\
+  sep = "\\t",\
+  stringsAsFactors = FALSE,\
+  quote = "")\
+\
+#mapping \
+#format the picked \
+picked_long <- picked %>%\
+  separate_rows(Modules, sep = ",\\\\s*")\
+\
+mapping<-merge(picked_long,anvio_kegg_module, by.x="Modules", by.y = "module")\
+\
+kegg_completeness_wide <- mapping %>%\
+  filter(db_name %in% c("KMM289", "KMM358", "KMM366")) %>%\
+  distinct() %>%\
+  pivot_wider(\
+    names_from = db_name,\
+    values_from = c(pathwise_module_completeness,\
+                    stepwise_module_completeness),\
+    names_glue = "\{.value\}_\{db_name\}")\
+\
+write.csv(kegg_completeness_wide, "kegg_enrich_completeness_biolog.csv", row.names = F)\
+\
+\
+
+\f0\b \
+\
+Figure 2. \cf2 \expnd0\expndtw0\kerning0
+Metabolism
+\f1\b0  
+\f0\b heatmap \cf0 \kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 python gff_parser.py KMM289_tss.gff \\ --gene-calls KMM289_gene_calls.txt \\ --annotation KMM289_gene_annot.txt\
+\
+anvi-script-reformat-fasta tss_KMM289.fasta \\ -o contigs_289.fa \\ --simplify-names
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 anvi-gen-contigs-database -f contigs_289.renum.fa \\ -o contigs_289.db \\ -n KMM289\\ --external-gene-calls KMM289_gene_calls.contig_renum.txt \\ --ignore-internal-stop-codons\
+\
+anvi-run-kegg-kofams -c contigs_289.db -T 8\
+\
+anvi-export-functions -c contigs_289.db -o KMM289_functions.tsv\
+\
+anvi-estimate-metabolism -c contigs_289.db\
+\
+anvi-estimate-metabolism -c A_muciniphila-CONTIGS.db \\ -O A_muciniphila \\ --output-modes modules \\ --kegg-data-dir /opt/shared/ref-dbs/anvio/kegg/\
+\
+anvi-estimate-metabolism -e external-genomes.txt \\ -O 289_358_366_metabolism --add-copy-number\
+\
+anvi-interactive -d 289_358_366_metabolism-module_pathwise_completeness-MATRIX.txt \\ -p modules_heatmap.db \\ --manual \\ --title "KMM289, KMM358, KMM 366 metabolism heatmap"\
+
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Figure 3\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 anvi-draw-kegg-pathways --external-genomes external-genomes.txt \\ -o ALL_PATHWAY_MAPS \\ --ko \\ --draw-grid \\ --pathway-numbers 00051 00720\
+
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+Figure 4. Pan-genome + COG annotation\
+### In a\'92nvio
+\f1\b0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 #Run it with COG annotation\
+for db in *-contigs.db\
+do\
+    echo "Running COG annotation on $db"\
+\
+    anvi-run-ncbi-cogs \\\
+        -c "$db" \\\
+        -T 12\
+done\
+\
+\
+#update genome database\
+anvi-gen-genomes-storage \\\
+    -e external-genomes.txt \\\
+    -o COG-All-GENOMES.db\
+\
+#create pangenome database\
+anvi-pan-genome \\\
+    --genomes-storage COG-All-GENOMES.db \\\
+    --project-name All-GENOMES_COG \\\
+    -T 12\
+\
+anvi-summarize \\\
+    -p All-GENOMES_COG-PAN.db \\\
+    -g COG-All-GENOMES.db \\\
+    -o Pangenome_summary_COG\kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+#visulization\
+\pard\pardeftab720\partightenfactor0
+\cf0 #layers\
+anvi-import-misc-data -p All-GENOMES_COG-PAN.db \\\
+                      -t layers \\\
+                      --just-do-it \\\
+                      host-genomes.txt\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+anvi-display-pan \\\
+  -g COG-All-GENOMES.db \\\
+  -p All-GENOMES_COG-PAN.db\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\
+\
+
+\f0\b ## COG annotation heatmap in R studio\
+
+\f1\b0 setwd("/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\\ genome\\ assembly/2026Mar04_Biolog_Analysis_new_data/selected\\ genomes\\ comparision/01_PANGENOME/New\\ with\\ 24\\ genomes/SUMMARY_pangenome_bins")\
+\
+cog_pan_sum<- read.delim("All-GENOMES_COG_gene_clusters_summary.txt",stringsAsFactors = FALSE)\
+\
+cog_pan <- cog_pan_sum[cog_pan_sum$COG24_CATEGORY != "", ]\
+\
+#use this info in txt, use cog_pan_sum regardless of cog annotation\
+summary_bin<- cog_pan_sum %>%\
+  group_by(bin_name) %>%\
+  summarise(n = n(), .groups = "drop")\
+\
+\
+summary(cog_pan)\
+\
+\
+summary <- cog_pan %>%\
+  group_by(bin_name,genome_name,COG24_CATEGORY) %>%\
+  summarise(n = n(), .groups = "drop")\
+\
+#most abundant regardless bin and genome name\
+summary_category<-cog_pan %>%\
+  group_by(COG24_CATEGORY) %>%\
+  summarise(n = n(), .groups = "drop")\
+\
+factor(summary$genome_name)\
+#change the names \
+# Ho04_635 to  Ho04-635\
+# b1_3  to b1-3 \
+# Hv98_241  to Hv98-241 \
+# Hv98_571  to  Hv98-571\
+summary <- summary %>%\
+  mutate(\
+    genome_name = dplyr::recode(\
+      genome_name,\
+      "Ho04_635" = "Ho04-635",\
+      "b1_3" = "b1-3",\
+      "Hv98_241" = "Hv98-241",\
+      "Hv98_571" = "Hv98-571",\
+      "AV1708_29120" = "1708-29120",\
+      "AV183026" = "183026",\
+      "Hv96_22" = "Hv96-22",\
+      "Hv98_571" = "Hv98-571",\
+      "Hv98_241"="Hv98-241",\
+      "Hv98_231" ="Hv98-231",\
+      "Hv98_232" = "Hv98-232",\
+      "Hv98_225" = "Hv98-225"))\
+\
+ \
+\
+my_levels <- c("Hv98-571", "Hm22", "KMM366", "KMM358",\
+               "Hv98-231", "Hv98-232", "Hv98-241", "Hm21", "Ho04-635",\
+               "b1-3", "1708-29120", "ANYA_14430", "ANYA_13997", "FC951",\
+               "AV040", "KMM289", "D3", "Hv98-225", "ANYA_18196",\
+               "FDAARGOS_632", "AV0110", "C4", "ZfB1", "183026")\
+\
+\
+top25 <- summary %>%\
+  group_by(COG24_CATEGORY) %>%\
+  summarise(total = sum(n), .groups = "drop")\
+\
+\
+#Make heatmap\
+\
+##top 25 in core gene cluster\
+top25_core <- summary %>%\
+  filter(bin_name == "Core") %>%\
+  group_by(COG24_CATEGORY) %>%\
+  summarise(total = sum(n), .groups = "drop") %>%\
+  arrange(desc(total)) %>%\
+  slice_head(n = 25) %>%\
+  pull(COG24_CATEGORY)\
+\
+\
+#make heatmaps on core and unique \
+core <- summary %>%\
+  filter(bin_name == "Core",COG24_CATEGORY %in% top25_core) %>%\
+  select(-bin_name) %>%\
+  pivot_wider(names_from = COG24_CATEGORY,values_from = n,values_fill = 0) \
+  \
+core <- core[match(my_levels, core$genome_name), ]\
+core<-column_to_rownames(core, var = "genome_name")\
+core_mat <- t(as.matrix(core))\
+\
+\
+\
+rownames(core_mat) <- str_wrap(rownames(core_mat), width = 35)\
+\
+p1<-pheatmap(\
+  core_mat,\
+  color = colorRampPalette(c("white", "#c6dbef", "#6baed6", "#2171b5", "#08306b"))(100),\
+  cluster_rows = FALSE,\
+  cluster_cols = FALSE,\
+  border_color = "grey90",\
+  fontsize_row = 10,\
+  fontsize_col = 8,\
+  angle_col = "45",\
+  main = "Core gene clusters of pan-genome")\
+\
+\
+#export as a svg file\
+svglite("Core_gene_clusters_heatmap.svg",width = 10,height = 10)\
+print(p1)      \
+dev.off()\
+\
+\
+top25_unique <- summary %>%\
+  filter(bin_name == "Unique") %>%\
+  group_by(COG24_CATEGORY) %>%\
+  summarise(total = sum(n), .groups = "drop") %>%\
+  arrange(desc(total)) %>%\
+  slice_head(n = 25) %>%\
+  pull(COG24_CATEGORY)\
+\
+unique <- summary %>%\
+  filter(bin_name == "Unique",COG24_CATEGORY %in% top25_unique) %>%\
+  select(-bin_name) %>%\
+  pivot_wider(names_from = COG24_CATEGORY,values_from = n,values_fill = 0) \
+\
+unique <- unique[match(my_levels, unique$genome_name), ]\
+unique<-as.data.frame(unique)\
+# 4 of them doesn't have unique genome - same as the circular chart\
+unique$genome_name[is.na(unique$genome_name)] <-\
+  c("Hv98-571", "Hm22", "Hv98-231", "Hv98-232")\
+\
+\
+unique<-column_to_rownames(unique, var = "genome_name")\
+unique_mat <- t(as.matrix(unique))\
+\
+\
+rownames(unique_mat) <- str_wrap(rownames(unique_mat), width = 35)\
+\
+p2<-pheatmap(\
+  unique_mat,\
+  color = colorRampPalette(c("white", "#c6dbef", "#6baed6", "#2171b5", "#08306b"))(100),\
+  cluster_rows = FALSE,\
+  cluster_cols = FALSE,\
+  border_color = "grey90",\
+  fontsize_row = 10,\
+  fontsize_col = 8,\
+  angle_col = "45",\
+  main = "Unique gene clusters of pan-genome")\
+\
+#export as a svg file\
+svglite("Unique_gene_clusters_heatmap.svg",width = 10,height = 8)\
+print(p2)      \
+dev.off()\
+\
+\
+
+\f0\b \
+Figure5. Pan-genome rarefaction cure\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 ### In a\'92nvio\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 anvi-compute-rarefaction-curves -p \kerning1\expnd0\expndtw0 \outl0\strokewidth0 All-GENOMES_COG-PAN.db
+\f0\b \
+\
+\
+Figure6. Phylogenomics tree + ANI
+\f1\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 ### In a\'92nvio
+\f1\b0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 anvi-get-sequences-for-gene-clusters -p All-GENOMES_COG-PAN.db \\\
+                                     -g COG-All-GENOMES.db \\\
+                                     --min-num-genomes-gene-cluster-occurs 24 \\\
+                                     --max-num-genes-from-each-genome 1 \\\
+                                     --concatenate-gene-clusters \\\
+                                     --output-file All-Averoni-SCGs.fa\
+\
+\
+trimal -in All-Averoni-SCGs.fa \\\
+       -out All-Averoni-SCGs-clean.fa \\\
+       -gt 0.50\
+\
+iqtree -s All-Averoni-SCGs-clean.fa \\\
+       -nt 8 \\\
+       -m WAG \\\
+       -bb 1000\
+\
+\
+##
+\f0\b  
+\f1\b0 ANI visualization\
+### takes a long time \
+anvi-compute-genome-similarity -e external-genomes.txt \\\
+                               -p All-GENOMES_COG-PAN.db   \\\
+                               -o ANI \\\
+                               --program pyANI \\\
+                               -T 12\
+\
+\
+
+\f0\b \
+### In R studio
+\f1\b0 \
+setwd("/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\\ genome\\ assembly/2026Mar04_Biolog_Analysis_new_data/selected\\ genomes\\ comparision/01_PANGENOME/New\\ with\\ 24\\ genomes/ANI")\
+\
+ANI<- read.delim("ANIb_percentage_identity.txt",stringsAsFactors = FALSE)\
+ANI<- as.data.frame(ANI)\
+ANI<-column_to_rownames(ANI, var = "key")\
+\
+name_map <- c(\
+  "Ho04_635" = "Ho04-635",\
+  "b1_3" = "b1-3",\
+  "Hv98_241" = "Hv98-241",\
+  "Hv98_571" = "Hv98-571",\
+  "AV1708_29120" = "1708-29120",\
+  "AV183026" = "183026",\
+  "Hv98_231" = "Hv98-231",\
+  "Hv98_232" = "Hv98-232",\
+  "Hv98_225" = "Hv98-225")\
+\
+# Rename row names\
+idx <- rownames(ANI) %in% names(name_map)\
+rownames(ANI)[idx] <- name_map[rownames(ANI)[idx]]\
+\
+# Rename column names\
+idx <- colnames(ANI) %in% names(name_map)\
+colnames(ANI)[idx] <- name_map[colnames(ANI)[idx]]\
+\
+my_levels <- c("AV0110","Hv98-225", "AV040", \
+               "FDAARGOS_632", "1708-29120",  "b1-3", "KMM358", "KMM366", "C4","KMM289",\
+               "Hm22","Hv98-571","Hv98-231", "Hv98-232","Hm21" ,"Ho04-635",\
+               "Hv98-241",  "FC951","D3","ANYA_18196","183026",\
+               "ZfB1","ANYA_13997", "ANYA_14430")\
+\
+ \
+ANI <- ANI[my_levels, my_levels]\
+\
+\
+pheatmap(\
+  ANI,\
+  color = colorRampPalette(c("white", "#D55E00"))(100),\
+  cluster_rows = FALSE,\
+  cluster_cols = FALSE,\
+  border_color = "grey90",\
+  fontsize_row = 10,\
+  fontsize_col = 8)\
+\
+\
+#### claude assignment\
+ \
+library(ComplexHeatmap)\
+library(circlize)\
+\
+col_fun <- colorRamp2(\
+  seq(min(ANI), max(ANI), length.out = 100),\
+  colorRampPalette(c("white", "#D55E00"))(100)\
+)\
+\
+aniheatmap<-Heatmap(\
+  as.matrix(ANI),\
+  col = col_fun,\
+  cluster_rows = FALSE,\
+  cluster_columns = FALSE,\
+  rect_gp = gpar(col = "grey90", lwd = 0.5),   # border_color equivalent\
+  row_names_side = "left",                      # y labels on LEFT\
+  column_names_side = "top",                    # x labels on TOP\
+  row_names_gp = gpar(fontsize = 10),           # fontsize_row\
+  column_names_gp = gpar(fontsize = 10),         # fontsize_col                \
+  heatmap_legend_param = list(title = "ANI"))\
+\
+\
+\
+#export as a svg file\
+svglite("ANI_heatmap.svg",width = 6,height = 5)\
+print(aniheatmap)      \
+dev.off()\
+\
+\
+\
+\
+
+\f0\b ##Figure 7.  VF and AMR
+\f1\b0 \
+setwd("/Users/sihanbu/Library/CloudStorage/OneDrive-UniversityofConnecticut/Research/whole\\ genome\\ assembly/2026Mar04_Biolog_Analysis_new_data/selected\\ genomes\\ comparision/AMR_and_VF")\
+\
+VF <- read.delim("vfdb_all.tab", check.names = FALSE) \
+group <- read.csv("Aeromonas_VFs_grouping.csv", header = T)\
+\
+\
+#remove Hv96-22.fasta\
+VF<-filter(VF, `#FILE`  != "Hv96-22.fasta")\
+\
+\
+#create a new col as genome name \
+VF$genome_name <- sub("\\\\.fasta$", "", basename(VF$`#FILE`))\
+summary(VF$genome_name)\
+#write.csv(VF, "VF_info.csv", row.names = F)\
+\
+\
+##pick the %IDENTITY>=90 to make a heatmap\
+VF<- VF[VF$`%IDENTITY` >= 90, ]\
+\
+\
+#62 genes \
+pa <- VF %>%\
+  select(genome_name, GENE) %>%\
+  distinct() %>%                    # one row per genome-gene pair\
+  mutate(present = 1) %>%\
+  pivot_wider(names_from = GENE,\
+              values_from = present,\
+              values_fill = 0)   \
+\
+#pa_1 = 62 genes\
+pa <-as.data.frame(pa)\
+pa_1<-column_to_rownames(pa, var = "genome_name")\
+pa_1<-t(pa_1)\
+pa_1<-as.data.frame(pa_1)\
+pa_1<-rownames_to_column(pa_1, var="Genes")  # 62 genes\
+\
+shared_all <- pa_1[rowSums(pa_1[, -1] == 1) == ncol(pa_1[, -1]), ]\
+\
+\
+# 64 genes-2 = 62 genes \
+## removed one for each, need to add them by in svg\
+# two flgC - Lateral flagella/Polar flagella - Motility\
+# two fliG - Lateral flagella/Polar flagella - Motility\
+merge<-merge(pa_1, group, by = "Genes")\
+merge<-merge[-c(48,51),]\
+merge<-as.data.frame(merge)\
+rownames(merge) <- NULL\
+\
+#core, accessory gene type, create gene_type column\
+merge$gene_type <- ifelse(\
+  rowSums(merge[, -c(1, 27:28)] == 1) == 24,\
+  "core",\
+  "accessory")\
+\
+accessory<-filter(merge, merge$gene_type =="accessory")\
+summary(accessory)\
+\
+accessory$Group<-as.factor(accessory$Group)\
+\
+summary<-accessory %>%\
+  distinct(Genes, Group, Virulence.factors) %>%\
+  count(Group, Virulence.factors, name = "gene_count") %>%\
+  group_by(Group) %>%\
+  mutate(percent_within_group = gene_count / 58 * 100) %>%\
+  ungroup()\
+\
+merge<-column_to_rownames(merge, var="Genes")  # 62 genes\
+\
+\
+my_levels <- c("AV0110","Hv98-225", "AV040", \
+               "FDAARGOS_632", "1708-29120",  "b1-3", "KMM358", "KMM366", "C4","KMM289",\
+               "Hm22","Hv98-571","Hv98-231", "Hv98-232","Hm21" ,"Ho04-635",\
+               "Hv98-241",  "FC951","D3","ANYA_18196","183026",\
+               "ZfB1","ANYA_13997", "ANYA_14430")\
+\
+ \
+mat <- merge%>%\
+  select( -Group, -Virulence.factors) %>%\
+  as.matrix()\
+mode(mat) <- "numeric"\
+mat<- mat[, my_levels]\
+\
+\
+## removed one for each, need to add them by in svg\
+# two flgC - Lateral flagella/Polar flagella - Motility\
+# two fliG - Lateral flagella/Polar flagella - Motility\
+\
+group_row <- merge %>%\
+  select(Virulence.factors, Group) %>%\
+  rename(virulence_group = Virulence.factors)  \
+\
+\
+my_color <- c("grey90", "#b36692")      \
+ph_breaks <- c(-0.5, 0.5, 1.5)  \
+\
+\
+group_levels <- sort(unique(group_row$virulence_group))\
+group_levels_2 <- sort(unique(group_row$Group))\
+\
+\
+group_colors <- list(\
+  virulence_group = setNames(\
+    colorRampPalette(brewer.pal(8, "Set2"))(length(group_levels)),\
+    nm = group_levels),\
+  Group = setNames(\
+    colorRampPalette(brewer.pal(3, "Set3"))(length(group_levels_2)),\
+    group_levels_2))\
+\
+png("vf_heatmap_vf_group.png", width = 3500, height = 4500, res = 400)\
+p<-pheatmap(mat,\
+         color = my_color,\
+         breaks = ph_breaks,\
+         legend_breaks = c(0, 1),\
+         legend_labels = c("Absent", "Present"),\
+         labels_row = merge$Genes,\
+         clustering_distance_rows = "binary",\
+         clustering_distance_cols = "binary",\
+         treeheight_row = 12,\
+         treeheight_col = 10,\
+         annotation_row = group_row,\
+         annotation_colors = group_colors,\
+         annotation_names_row = FALSE,\
+         #\uc0\u35774 \u32622 \u34892 /\u21015 \u30340 \u23383 \u20307 \
+         fontsize_row = 11,\
+         fontsize_col = 12,\
+         cluster_cols = FALSE,\
+         cluster_rows = FALSE,\
+         na_col = "grey80")\
+dev.off()\
+\
+svglite("vf_heatmap_vf_group.svg",width = 8,height = 11)\
+print(p)      \
+dev.off()\
+\
+\
+####  AMR brief analysis\
+\
+AMR <- read.delim("ncbi_amr_all.tab", check.names = FALSE) \
+AMR$genome_name <- sub("\\\\.fasta$", "", basename(AMR$`#FILE`))\
+#write.csv(AMR, "AMR_info.csv", row.names = F)\
+\
+AMR<-filter(AMR, `#FILE`  != "Hv96-22.fasta")       \
+\
+library(dplyr)\
+\
+amr_core <- AMR %>%\
+  group_by(RESISTANCE) %>%\
+  summarise(\
+    n_genomes = n_distinct(genome_name),\
+    .groups = "drop"\
+  ) %>%\
+  filter(n_genomes == 24)\
+\
+amr_core\
+\
+\
+\
+\
+\
+}
